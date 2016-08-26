@@ -1,0 +1,615 @@
+@charset "UTF-8";
+/* Main CSS Document of the HADDOCK webserver */
+
+/* BASICS
+   Define elementary things as the main body (body)
+   the container for all content (container), the 
+   container for all text e.d. (content, in either
+   one or two colums) and the header image (header)
+--------------------------------------------------- */
+body {
+	margin:0;
+	padding:0;
+	background-color:#E7E7E7;
+	font:small/1.6em Verdana,Sans-serif;
+	text-align:left;
+  	}
+  
+.container {
+	background-color:#E7E7E7;
+	width:750px;
+	margin:0 auto;
+	border:solid;
+	border-color:#868686;
+	border-width:0 1px;
+	text-align:left;
+	color:#333;
+	position:relative;
+  	}
+ 
+#content {
+  	padding:0 0px;
+  	float:left;
+  	width:100%;
+        height: auto !important;  /* per i browser moderni */
+	height: 410px;      /* per IE5.x e IE6 */
+	min-height: 410px;  /* per i browser moderni */
+	background-color: white;
+  	}
+.boxhead{
+    margin-top: 30px;
+}
+
+#header {
+  	background-color:#E7E7E7;
+  	background-repeat:no-repeat;
+  	float:left;
+  	width:100%;
+  	height:130px;
+  	}
+
+p {
+  	margin:0 0 .75em;
+  	}
+
+a {
+  	color:#285A92;
+  	text-decoration:none;
+  	}
+  
+a:hover {
+  	color:#152C58;
+  	text-decoration:underline;
+  	}
+
+hr {
+  	display:none;
+  	}
+
+/* Two Colum page layout
+--------------------------------------------------- */
+#maincol {
+  	float:left;
+  	width:465px;
+  	margin-top:-8px;
+  	padding-top: 15px;
+  	}
+  
+#subcol {
+  	float:left;
+  	width:200px;
+  	color:#888888;
+  	font-size:85%;
+  	line-height:1.6em;
+  	margin-top:-50px;
+ 	/*padding-top: 20px;*/
+        padding: 42px;
+	}
+
+/* One Colum page layout
+--------------------------------------------------- */
+#col1 #maincol {
+  	float:none;
+  	width:710px;
+  	}
+
+/* Path. The link for the path background image is
+   defied on the page.
+--------------------------------------------------- */
+
+#path {
+	background-color:#E7E7E7;
+  	background-repeat:repeat-x;
+  	width:100%;
+ 	padding:0;
+ 	height:39px;
+ 	float:left;
+ 	}
+  
+#path ul {
+  	margin:0;
+  	padding:0.9em 16px 0;
+  	list-style:none;
+  	}
+  
+#path li {
+  	display:inline;
+  	margin: 0;
+	background-image:none;
+  	line-height:1em;
+  	text-indent:0;
+  	color:#A23E00;
+ 	font-size:85%;
+ 	}
+  
+#path a, 
+#path strong {
+	float:left;
+	display:block;
+	color:#C75014;
+	border-width:0;
+	padding:.25em 3px;
+	font-weight:normal;
+	line-height:2em;
+	text-decoration:none;
+  	}
+  
+#path a strong {
+  	font-size:100%;
+  	padding:0;
+  	}
+  
+#path a:hover {
+	color:#FF6800;
+  	}
+
+/* Navigation bar. The link for the navigation bar 
+   background image is defied on the page.
+--------------------------------------------------- */
+
+#navbar {
+  	background-color:#fff;
+  	background-repeat:no-repeat;
+  	background-position:0px 0px;
+  	float:left;
+  	width:100%;
+  	border:solid;
+  	border-width:1px 0px;
+ 	border-color:#431611;
+ 	}
+  
+#navbar ul {
+  	margin:0px;
+  	padding:0 20px;
+  	list-style:none;
+  	font-size:85%;
+  	}
+  
+#navbar li {
+  	float:left;
+  	margin:0px;
+  	padding:0px;
+  	line-height:normal;
+  	text-indent:0px;
+  	}
+  
+#navbar a {
+	display:block;
+	padding:4px 10px;
+	color:#C75014;
+	text-decoration:none;
+ 	}
+  
+#navbar a:hover {
+  	background-repeat:no-repeat;
+  	color:#FFFFFF;
+  	}
+
+#navbar .current a {
+	font-weight:bold;
+	color:#FFFFFF;
+  	}
+   
+/* Lists
+----------------------------------------------- */
+
+dl, ul {
+  	margin:.5em 0 1em;
+  	padding:0;
+  	list-style:inside;
+  	}
+  
+/*ul li {*/
+/*  	margin:0 0 2px;*/
+/*  	padding:0 0 0 18px;*/
+/*  	text-indent:-18px;*/
+/*  	}*/
+	
+dl.intro, 
+dl.textblock,
+dl.sidebar {
+  	margin-bottom:1.25em;
+        margin-left: 20px;
+  	}
+  
+dt {
+ 	font-weight:bold;
+  	}
+  
+dt, 
+dt a {
+	color:#A23E00;
+  	}  
+  
+.intro dt, 
+.textblock dt {
+  	font:small/1.6em Verdana,Sans-serif;
+  	font-size:130%;
+  	font-variant: small-caps;
+  	letter-spacing: 0.2em;
+  	line-height:1.5em;
+  	border-width:0;   
+  	}
+  
+.textblock dt {
+  	margin-top:2em;
+  	border-top:1px dotted #ccd;
+  	padding-top:4px;
+  	}
+  
+dd {
+  	margin:0 0 1em;
+  	padding:0;
+  	}
+  
+dd ul {
+  	margin:0;
+  	padding:0;
+  	}
+  
+dd li {
+  	padding:0;
+  	margin-bottom:0;
+  	text-indent:0;
+  	}
+
+ Specific dd modifications for the publication list 
+.publication ul 
+.publication ol{
+	margin-left: 4px;
+	}
+
+.publication li {
+	list-style:outside;
+	margin-left:25px;
+	padding-left:2px;
+	padding-bottom:5px;
+	}
+	
+.publication h1{
+	font-size:100%;
+	}
+	
+.intro dd, 
+.textblock dd {
+  	font:small/1.6em Verdana,Sans-serif;
+  	font-size:85%;
+  	line-height:1.8em;
+  	margin-bottom:1em;
+  	margin-top:.5em;
+  	}
+  
+.intro dd.summary,
+.textblock dd.summary  {
+  	margin-bottom:0;
+  	}
+  
+.rollovertooltip{
+  	margin-bottom:0.2em;
+  	color: #999999;	
+  	}
+  
+.rollovertooltip a {
+	color:#A23E00;
+	border-width:0;
+	font-weight:normal;
+	line-height:2em;
+	text-decoration:none;
+  	}
+  
+.rollovertooltip a:hover {
+	color:#431b01;
+	text-decoration:underline;
+  	}
+
+.sidebar dt {
+  	font:small/1.6em Verdana,Sans-serif;
+  	font-size:119%;
+  	font-variant: small-caps;
+  	letter-spacing: 0.2em;
+  	line-height:1.5em;
+  	border-width:0;
+  	margin-top:2.5em;
+  	border-top:1px dotted #ccd;
+  	}
+  
+.firstsidebaritem dt{
+  	margin-top:0.4em;
+  	border-top:none;
+  	}
+  
+.sidebar dd {
+  	font:small/1.6em Verdana,Sans-serif;
+  	font-size:90%;
+  	line-height:1.4em;
+  	margin-bottom:-2px;
+  	margin-top:1.1em;
+  	}
+  
+.sidebar dd.summary {
+	margin-bottom:0;
+   	}
+ 
+
+ /* Image specific layou
+----------------------------------------------- */
+
+a img {
+  	border-width:0;
+        margin-left:7px;
+  	}
+
+.imgleft, 
+.left, 
+img.left{
+  	float:left;
+  	margin: 4px 8px 4px 0px;
+  	}
+  
+.imgright, 
+.right, 
+img.right {
+  	float:right;
+  	margin:4px 0 4px 8px;
+  	}
+
+img.imgleft, 
+img.imgright {
+  	padding:4px;
+  	border:1px solid #ddc;
+  	}
+  
+img.intro{
+ 	padding-bottom: 10px;
+  	padding-right: 10px;
+  	}
+
+  /* Links
+----------------------------------------------- */
+
+.onsitelink, 
+.onsitelink:visited {
+  	background:url("../Images/docicon-brown-off.png") no-repeat 0 0;
+  	border-width:0;
+  	padding-left:14px;
+  	line-height: 2px;
+  	}
+  
+.offsitelink, 
+.offsitelink:visited {
+  	background:url("../Images/linkicon-brown-off.png") no-repeat 0 0;
+  	border-width:0;
+  	padding-left:15px;
+  	}
+  
+.emaillink, 
+.emaillink:visited {
+  	background:url("../Images/emailicon-brown-off.png") no-repeat 0 0;
+  	border-width:0;
+  	padding-left:17px;
+  	}
+  
+a.onsitelink:hover {
+  	background:url("../Images/docicon-brown-on.png") no-repeat 0 0;
+  	}
+  
+a.offsitelink:hover {
+  	background:url("../Images/linkicon-brown-on.png") no-repeat 0 0;
+  	}
+  
+a.emaillink:hover {
+  	background:url("../Images/emailicon-brown-on.png") no-repeat 0 0;
+  	}
+
+.onsitelink, 
+.onsitelink:visited,
+.offsitelink, 
+.offsitelink:visited,
+.emaillink, 
+.emaillink:visited{
+  	color:#888888;
+  	text-transform: uppercase;
+  	text-decoration: none;
+  	letter-spacing: 0.15em;
+  	}  
+  
+a.onsitelink:hover,
+a.offsitelink:hover,
+a.emaillink:hover {  
+  	text-decoration: underline;
+  	color:#152C58;
+  	border-color:#ccb;
+  	}
+    
+.onsitelink img, 
+.offsitelink img,
+.emaillink img{
+  	margin-top:.5em;
+  	} 
+
+/* Subheader
+----------------------------------------------- */
+#subheader {
+   	background-color:#DBDBDB;
+   	background-repeat:no-repeat;
+   	font-size:75%;
+  	text-transform: uppercase;
+  	letter-spacing: 0.1em;
+  	float:left;
+  	width:100%;
+  	height:30px;
+  	margin-top:0;
+  	}
+
+#subheader ul {
+  	margin:0;
+  	padding: 0.4em 16px 0 20px;
+ 	list-style:none;
+ 	}
+  
+#subheader li {
+  	display:inline;
+  	padding: .25em 30px .25em 0px;
+  	background-image:none;
+  	line-height:2em;
+  	text-indent:0;
+  	margin: 0;
+  	float:left;
+  	}
+  
+#subheader a,
+#subheader span, 
+#subheader strong {
+	color:#967149;
+	border-width:0;
+	font-weight:normal;
+	text-decoration:none;
+ 	}
+  
+#subheader a strong {
+  	font-size:100%;
+  	padding:0;
+  	}
+  
+#subheader strong {
+  	color:#bec;
+  	}
+  
+#subheader a:hover {
+  	color:#333;
+  	}
+  
+#subheadersidebar {
+	position: absolute;
+	left: 525px;
+	padding-top: 0.25em;
+	padding-bottom: 0;
+	padding-left: 0;
+	color:#967149;
+  	}
+  
+#subheader .left {
+  	float:left;
+  	margin:4px 3px 4px 0;	
+  	}
+
+/* Footer. Footer image link on page
+----------------------------------------------- */
+
+#footer {
+  	clear:both;
+  	font-size:0.65em;
+  	border: solid #868686 0px;
+  	border-bottom-width: 1px;
+  	}
+
+#footer p {
+	margin:0;
+	padding:10px 20px;
+	color:#8E7169;
+	text-align:center;
+	line-height:1.5em;
+  	}
+
+#footer a, 
+#footer a:visited {
+  	color:#8E7169;
+  	border-color:#8E7169;
+  	}
+
+#footer a:hover {
+	color:#135;
+	border-color:#8E7169;
+  	}
+
+#rssfeed {
+	border-width:0;
+	position: absolute;
+	display: block;
+	left: 686px;
+	top: 197px;
+	width: 20px;
+	height: 9px;
+	background:url("../Images/rssicon-brown.png") no-repeat 0 0;
+  	}
+
+/* Dynamic dropdown menus
+----------------------------------------------- */
+
+.topItem {
+	background-color:#6B1E0C;
+    font: small/1.9em Verdana,Sans-serif;
+	font-weight: bold;
+	text-indent: 10px;
+	color: #FFFFFF;
+  	border: none;
+  	width: 100%;
+  	height: 25px;
+	margin-top: 10px;
+    }
+
+#level2 {
+	background-color:#B1231C;
+	}
+
+#level3 {
+	background-color:#DA3914;
+	}
+
+#level4 {
+	background-color:#EB7700;
+	}
+
+#level5 {
+	background-color:#FBA300;
+	}	
+	
+.switchgroup1 {	
+  	font: small/1.6em Verdana,Sans-serif;
+  	font-size: 85%;
+  	color:#333;
+  	background-color: #FFFFFF;
+  	border: 1px solid #868686;
+  	border-width: 0 1px 1px 1px;
+  	padding:5px;
+  	}
+
+.submitItem {
+	font: small/1.6em Verdana,Sans-serif;
+  	color:#FFFFFF;
+  	background-color: #6B1E0C;
+  	padding:5px;
+  	margin-top:10px;
+    }
+	
+table {
+	width:100%;
+	/*display:block;*/
+	}	
+
+td {
+	font:small/1.6em Verdana,Sans-serif;
+  	font-size: 11px;	/* Fixed size to avoid progressive smaller font-size in folding menu's */
+	padding:2px 0px 0px 10px;
+	}
+
+td.rightalign {
+	text-align:right;
+	}
+
+td.leftalign {
+	text-align:left;
+	}
+
+td.h1 {
+	font-weight:bold;
+	padding:5px 0px 0px 0px;
+	}
+
+td.h2 {
+	font-style:italic;
+	}
+	
+td.formdata {
+	padding:2px 0px 0px 100px;
+	}							

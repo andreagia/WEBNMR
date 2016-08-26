@@ -1,0 +1,4 @@
+	zip warning: missing end signature--probably not a zip file (did you
+	zip warning: remember to use binary mode when you transferred it?)
+
+zip error: Zip file structure invalid (server.log.4)

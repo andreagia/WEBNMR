@@ -1,0 +1,132 @@
+set abort=OFF end
+
+!parameter 
+!@TOPPAR:parallhdg.pro
+!@parallhdg_procheck.pro
+!@topallhdg_new.pro
+!end
+
+!structure 
+! @NE2_sequence.psf
+!end
+
+
+!TOP_PAR
+
+
+{====>}       {*"Backbone" selection--this example is typical for proteins.*}
+vector idend ( store9 ) ( name CA )
+
+   {*============ The first stage consists of computing the mean structure.*}
+
+{====>}                 {*Loop through the family of 8 accepted structures.*}
+evaluate ($end_count=Num_struct)
+
+eval ($nfile=0)
+vector do (store1=0) (all)
+vector do (store2=0) (all)
+vector do (store3=0) (all)
+vector do (store4=0) (all)
+
+evaluate ($count = 0)
+while ($count < $end_count ) loop main 
+   evaluate ($count=$count+1)      
+      
+{====>}                     {*This is the name of the family of structures.*}
+   evaluate ($filename="ana"+encode($count)+".pdb")
+
+   coor @@$filename  
+
+   if ($count=1) then
+      coor copy end              {*Store first structure in comparison set.*} 
+   end if
+   coor sele=( recall9 ) fit end
+   vector do (store1=store1+x) (all)
+   vector do (store2=store2+y) (all)
+   vector do (store3=store3+z) (all)
+   vector do (store4=store4+x*x+y*y+z*z) (all)
+   eval ($nfile=$nfile+1)
+end loop main
+
+vector do (x = store1 / $nfile) (all)
+vector do (y = store2 / $nfile) (all)
+vector do (z = store3 / $nfile) (all)
+vector do (bcomp=sqrt(max(0,store4/$nfile-(x**2+y**2+z**2)))) (all)
+
+
+        {*The second stage consists of computing an overall rms difference.*}
+
+evaluate ($ave_rmsd_all=0.)
+evaluate ($ave_rmsd_back=0.)
+
+coor copy end
+
+evaluate ($count = 0)
+while ($count < $end_count ) loop main 
+   evaluate ($count=$count+1)      
+   set echo on end             
+{====>}                     {*This is the name of the family of structures.*}
+   evaluate ($filename="ana"+encode($count)+".pdb")
+
+   coor @@$filename 
+   display VIOLATIONS_INI STRUCTURE $filename
+   flags exclude * include bond angl impr vdw noe cdih elec dihe xpcs xrdc end
+
+
+   {* ================================================ Intial minimization.*}
+
+    minimize powell nstep=1  nprint=25 end
+
+
+     {* =================================== Write out the final structure(s).*}
+   display NOE_VIOL_INI
+   print threshold=0.001 noe
+   display NOE_VIOL_END
+   display DIH_VIOL_INI
+   print threshold=0.001 cdih
+   display DIH_VIOL_END
+   display PCS_VIOL_INI
+   xpcs print threshold=0.001 all end
+   display PCS_VIOL_END
+   display RDC_VIOL_INI
+   xrdc print threshold=0.001 all end
+   display RDC_VIOL_END
+
+   display RDC_TENSOR_INI
+   !PCS_TENSOR
+   display RDC_TENSOR_END
+
+   display PCS_TENSOR_INI
+   !PCS_TENSOR
+   display PCS_TENSOR_END
+
+
+   display VIOLATIONS_END
+
+   coor fit sele=( recall9 ) end
+   coor rms selection=( recall9 )end
+   evaluate ($ave_rmsd_back=$ave_rmsd_back + $result)
+   coor rms selection=( not hydrogen )end
+   evaluate ($ave_rmsd_all =$ave_rmsd_all + $result)
+end loop main
+
+evaluate ($ave_rmsd_back=$ave_rmsd_back / $nfile)
+evaluate ($ave_rmsd_all =$ave_rmsd_all  / $nfile)
+display ave. rms diff. to the mean struct. for non-h atoms= $ave_rmsd_all
+display ave. rms diff. to the mean struct. for the backbone= $ave_rmsd_back
+
+   {*====== Finally, the average structure and RMSDs are written to a file.*}
+coor swap end
+vector do (b=bcomp) ( all )
+
+remarks unminimized average over $nfile files
+remarks ave. rms diff. to the mean struct. for non-h atoms= $ave_rmsd_all
+remarks ave. rms diff. to the mean struct. for the backbone= $ave_rmsd_back
+remarks b array (last column) is the rms difference from the mean
+
+{====>}            {*Write average coordinates and RMSDs to specified file.*}
+write coordinates output=average.pdb end
+
+stop
+
+

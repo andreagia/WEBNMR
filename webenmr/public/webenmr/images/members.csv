@@ -1,0 +1,18 @@
+Id|Title|Firstname|Lastname|Gender|Email|Institution|Department|         Address|Zip|City|State|Country|Phone|Abook|Reg Type|One Day|Ismar/AMPERE|         Acc Persons|Reg. Date|Payment Method|Payment Status|DiscCode|Total Due|Abstract
+3|Mr|Flavio|Verdi|None|verdi@cerm.unifi.it|CERM|None|None|None|Sesto Fiorentino|                 None|Italy|None|False|ISMAR/Ampere Member|None|1234|None|None|1|False|None|200|No
+4|Mr|Carlo|Neri|None|neri@cerm.unifi.it|CERM|None|None|None|Sesto Fiorentino|                 None|Italy|None|False|ISMAR/Ampere Member|None|1234|None|None|1|False|None|400|No
+5|Mr|Carlo|Neri|None|cneri@cerm.unifi.it|CERM|None|None|None|Sesto Fiorentino|                 None|Italy|None|False|ISMAR/Ampere Member|None|1234|None|None|1|False|None|400|No
+6|Mr|Mario|Blu|None|blu@cerm.unifi.it|CERM|None|None|None|Sesto Fiorentino|                 None|Italy|None|False|Full Participant|None|None|None|None|1|False|None|400|No
+7|Mr|Carlo|Verdi|None|cverdi@cerm.unifi.it|CERM|None|None|None|Sesto Fiorentino|                 None|Italy|None|False|Full Participant|None|None|None|None|1|False|None|530|No
+8|Mr|Barba|Papà|None|bpapa@cerm.unifi.it|CERM|None|None|None|Sesto Fiorentino|                 None|Italy|None|False|Full Participant|None|None|None|None|1|False|None|320|No
+9|Mrs|Barba|Mamma|None|bmamma@cerm.unifi.it|CERM|None|None|None|Sesto Fiorentino|                 None|Italy|None|False|Day reg.|5|None|None|None|1|False|None|200|No
+10|Miss|Barba|Lalla|None|blalla@cerm.unifi.it|CERM|None|None|None|Sesto Fiorentino|                 None|Italy|None|False|ISMAR/Ampere Member|None|1234|None|None|1|False|None|200|No
+11|Mr|Barba|Forte|None|bforte@cerm.unifi.it|CERM|None|None|None|Sesto Fiorentino|                 None|Italy|None|False|Student|None|None|None|None|1|False|None|400|No
+13|Mr|Puffo|Paffo|None|ppafo@cerm.unifi.it|CERM|None|None|None|Sesto Fiorentino|                 None|Italy|None|False|Day reg.|5|None|None|None|1|False|None|200|No
+14|Mr|Indiana|Jones|None|jones@cerm.unifi.it|CERM|None|None|None|Sesto Fiorentino|                 None|Italy|None|False|ISMAR/Ampere Member|None|1234|None|None|1|False|None|200|No
+15|Mr|Carlo|Verdone|None|verdone@cerm.unifi.it|CERM|None|None|None|Sesto Fiorentino|                 None|Italy|None|False|ISMAR/Ampere Member|None|1234|None|None|0|False|None|200|No
+16|Mr|Pillo|Pallo|None|ppallo@cerm.unifi.it|CERM|None|None|None|Sesto Fiorentino|                 None|Italy|None|False|ISMAR/Ampere Member|None|1234|None|None|0|False|None|200|No
+17|Mr|Bingo|Bongo|None|bongo@cerm.unifi.it|CERM|None|None|None|Sesto Fiorentino|                 None|Italy|None|False|Invited Speaker|None|None|None|None|1|True|None|0|No
+18|Mr|Carlo|Carli|None|ccarli@cerm.unifi.it|CERM|None|None|None|Sesto Fiorentino|                 None|Italy|None|True|Full Participant|None|None|None|None|1|True|None|200|No
+19|Mr|Peppino|Lo Cascio|None|locascio@cerm.unifi.it|CERM|None|None|None|Sesto Fiorentino|                 None|Italy|None|True|Student|None|None|Peppa Lo Cascio, Pippetta Lo Cascio|None|1|True|None|400|No
+25||Peppino|Di Capri||morelli@cerm.unifi.it|CERM|CIRMP|via Sacconi|50019|Ssst|                 |Antarctica||True|Other|5||ddd|2009-12-03 14:55:44.023159|2|False|Grant3|520|No

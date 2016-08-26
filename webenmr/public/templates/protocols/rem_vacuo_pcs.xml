@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<protocol>
+    <calculation>
+    <description>Vacuum minimization</description>
+        <cntrl>
+            <flag>
+                <name>imin</name>
+                <value>1</value>
+            </flag>
+            <flag>
+                <name>maxcyc</name>
+                <value>5000</value>
+            </flag>
+            <flag>
+                <name>ncyc</name>
+                <value>200</value>
+            </flag>
+            <flag>
+                <name>ntpr</name>
+                <value>100</value>
+            </flag>
+            <flag>
+                <name>ntwx</name>
+                <value>100</value>
+            </flag>
+            <flag>
+                <name>cut</name>
+                <value>12.0</value>
+            </flag>
+            <flag>
+                <name>nmropt</name>
+                <value>2</value>
+            </flag>
+            <flag>
+                <name>ntb</name>
+                <value>0</value>
+            </flag>
+        </cntrl>
+        <rdc>1</rdc>
+        <list>1</list>
+    </calculation>
+    <summary>
+        Simple vacuum minimization with PCS restraints
+    </summary>
+</protocol>

@@ -1,0 +1,197 @@
+/************************/
+/* biolab.css style sheet */
+/************************/
+
+body {
+margin-top: 0px;
+padding-top: 0px;
+background-color: white;
+font: 20  11px Verdana, Geneva, Arial, Helvetica, sans-serif;
+font-weight: bold;
+text-align:left;
+color: #3670A7;
+}
+
+
+#head {
+  background-repeat: repeat-x;
+  color: #FFFFFF;
+  font-family: Palatino, serif;
+  font-weight: bold;
+  font-size: 12pt;
+  font-variant: small-caps;
+  border: 1px solid #000000 !important;
+}
+
+#title {
+  background-color: #307BA1;
+  border-color: #48B8F0 #2B6D8F #2B6D8F #48B8F0;
+  /* background-color: #000080;
+  border-color: #0000CF #00006E #00006E #0000CF;  */
+  border-style: solid;
+  border-width: 2px;
+  color: #FFFFFF;
+  font-size: 100%;
+  font-weight: bold;
+  padding: 2px .5em;
+}
+
+.fieldset {
+    width:300px;
+}
+
+.fieldset .label {
+    text-align:right;
+    width:70px;
+    float:left;
+    padding:0.2em;
+    margin:0;
+    margin-top:0.3em; 
+}
+
+.fieldset .nobr  { display:none; }  
+
+.fieldset .textfield {
+    margin:3px;
+    height:20px;
+    width:200px;
+    border:solid 0 #fff;
+    background: transparent 
+    url("../textfield_bg.gif") no-repeat fixed; 
+}
+
+fieldset>input.textfield {
+    background: transparent 
+    url("../textfield_bg.gif") no-repeat; 
+}
+
+.fieldset .textarea {
+    margin:3px;
+    height:165px;
+    width:200px; 
+}
+
+/* Show only to IE PC \*/
+* html .boxhead h2 {height: 1%;} /* For IE 5 PC */
+
+.sidebox {
+margin: 0 auto; /* center for now */
+width: 32em; /* ems so it will grow */
+background: url(../images/sbbody-r.gif) no-repeat bottom right;
+font-size: 100%;
+}
+
+.boxhead {
+background: url(../images/sbhead-r.gif) no-repeat top right;
+margin: 0;
+padding: 0;
+text-align: center;
+}
+
+.boxhead h2 {
+background: url(../images/sbhead-l.gif) no-repeat top left;
+margin: 0;
+padding: 22px 30px 5px;
+color: white; 
+font-weight: bold; 
+font-size: 1.0em; 
+line-height: 1em;
+text-shadow: rgba(0,0,0,.4) 0px 2px 5px; /* Safari-only, but cool */
+}
+
+.boxbody {
+background: url(../images/sbbody-l.gif) no-repeat bottom left;
+margin: 0;
+padding: 5px 30px 31px;
+}
+
+
+/* form style */
+form#login {
+ background-color: #CCCCCC;
+ color: #000000;
+ border: 1px solid #999999;
+ font-family: Verdana, Arial, Helvetica, sans-serif;
+ font-size: 10px;
+ text-align: right;
+}
+
+#login .text {
+ font-family: Verdana, Arial, Helvetica, sans-serif;
+ font-size: 11px;
+ width: 100px;
+ margin-right: 15px;
+}
+
+#login .buttons {
+ font-family: Verdana, Arial, Helvetica, sans-serif;
+ font-size: 10px;
+ background-color: #307BA1;
+ color: #FFFFFF;
+ margin-right: 6px;
+}
+
+fieldset { border:1px solid #3670A7; }
+
+legend {
+  padding: 0.2em 0.5em;
+  /*border:1px solid #3670A7;*/
+  color:#3670A7;
+  font: 11px Verdana, Geneva, Arial, Helvetica, sans-serif;
+  font-variant: small-caps;
+  font-weight: bold;
+  text-align:left;
+  }
+  
+  abbr, acronym, .help {
+  border-bottom: 1px dotted #333;
+  cursor: help;
+}
+
+div#container{width:500px;margin:0 auto}
+div.message{margin: 0 0  2em; padding: 15px 15px 0 50px;/*border: solid;*/border-width: 2px 0;/*background:#F0F0F0*/}
+div.message p{margin: 0 0 2em}
+div.message.info{background: #EAEBF7 url(/webenmr/images/info20.png) no-repeat 20px 20px;border-color: #8E9AFF}
+div.message.warning{background: #FFF0BA url(/webenmr/images/warning20.png) no-repeat 20px 20px;border-color: #E87C29}
+div.message.question{background: #E4F6DE url(/webenmr/images/help20.png) no-repeat 20px 20px;border-color: #8FDC79}
+div.message.error{background: #FFD8D6 url(/webenmr/images/error20.png) no-repeat 20px 20px;border-color: #FF0038}
+
+#content{
+  background-color:#fff;
+  margin-top:1em;
+  padding:2em;
+  /*font: 11px Verdana, Geneva, Arial, Helvetica, sans-serif;*/
+  font-weight: bold;
+  text-align:left;
+  color: #3670A7;
+   }
+#content h2{border-bottom:1px solid #ccc;color:#000;margin-top:0;}
+#content h3,#content h5{border-bottom:1px solid #ccc;color:#666;font-weight:normal;}
+#content h5{font-size:1.1em;font-weight:bold;margin:0 0 .5em 0;}
+#content p{margin-bottom:1em;}
+#footer{background-color:#fff;border-top:1px solid #900;border-bottom:2px solid #900;color:#900;margin-bottom:2em;padding:1em;}
+#footer p{font-size:.9em;margin:0;padding:0;}
+#footer .poweredby{clear:right;float:right;margin:-0.7em -0.7em 0 0;}
+#footer .poweredby img{border:1px solid #fff;float:right;}
+#footer .poweredby img:hover{border:1px solid #900;}
+#message-wrapper{position:relative;}
+#message{color:#000;display:none;margin-top:.3em;position:absolute;width:100%;}
+#message p{margin:0;padding:1em 1em 1em 3em;}
+.info{background:#def url(../images/info.png) .8em 50% no-repeat;border:1px solid #479;}
+.success{background:#dfd url(../images/success.png) .8em 50% no-repeat;border:1px solid #474;}
+.error{background:#fdd url(../images/error.png) .8em 50% no-repeat;border:1px solid #744;}
+.odd{background-color:#f0f0f0;}
+.even{background-color:#f9f9f9;}
+.list_table{background-color:#f9fbfd;border:1px solid #d7e5f2;border-collapse:collapse;}
+.list_table th{text-align:left;font:12px Verdana,Geneva,Arial,Helvetica,sans-serif;padding:3px 8px;font-weight:bold;border:1px solid #d9d9d9;}
+.list_table tbody tr td{text-align:left;font:10px Verdana,Geneva,Arial,Helvetica,sans-serif;padding:3px 8px;border-left:1px solid #d9d9d9;}
+.list_table tbody tr.odd td{background-color:#307ba1;color:#fff;font-weight:bold;border-right:1px solid #2b6d8f;border-top:1px solid #48b8f0;}
+img{border:0;}
+ul#nav{float: left;width: 100%;list-style: none;border-bottom: 1px solid #D7D7D7;margin: 0;padding: 0}
+ul#nav li{float: left;margin: 0 0.2em 0;padding: 0 0 0 8px;background: url(/images/tab.png) no-repeat top left}
+ul#nav a{float: left;padding: 0.4em 8px 0.4em 0;background: url(../images/tab.png) no-repeat top right;text-decoration: none;font-family: Verdana, Arial, Helvetica, sans-serif;
+ font-size: 12px;
+ color: #222}
+ul#nav a:hover{color: #184D8A}
+ul#nav li#active{background: url(../images/tab2.png) no-repeat top left}
+ul#nav li#active a{background: url(../images/tab2.png) no-repeat top right;color: #184D8A}

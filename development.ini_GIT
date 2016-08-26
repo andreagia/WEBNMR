@@ -1,0 +1,101 @@
+#
+# WebENMR - Pylons development environment configuration
+#
+# The %(here)s variable will be replaced with the parent directory of this file
+#
+[DEFAULT]
+debug = true
+# Uncomment and replace with the address which should receive any error reports
+#email_to = you@yourdomain.com
+smtp_server = localhost
+error_email_from = paste@localhost
+
+[server:main]
+use = egg:Paste#http
+host = 0.0.0.0
+port = 8080
+
+[app:main]
+use = egg:WebENMR
+full_stack = false
+static_files = true
+
+cache_dir = %(here)s/data
+beaker.session.key = 
+beaker.session.secret = 
+
+# If you'd like to fine-tune the individual locations of the cache data dirs
+# for the Cache data, or the Session saves, un-comment the desired settings
+# here:
+#beaker.cache.data_dir = %(here)s/data/cache
+#beaker.session.data_dir = %(here)s/data/sessions
+
+# SQLAlchemy database URL
+#sqlalchemy.url = sqlite:///%(here)s/webenmr.sqlite
+
+
+# WARNING: *THE LINE BELOW MUST BE UNCOMMENTED ON A PRODUCTION ENVIRONMENT*
+# Debug mode will enable the interactive debugging tool, allowing ANYONE to
+# execute malicious code after an exception is raised.
+#set debug = false
+
+cert_dir = %(here)s/data/.cert
+working_dir = %(here)s/data/enmr_r1
+temp_dir = %(here)s/data/temp
+mpl_data = %(here)s/data/mpl_data
+amber_data = %(here)s/data/amber_data
+amber_home = %(here)s/data/amber_prog/amber10
+xplor_data = %(here)s/data/xplor_data
+xplor_templ = %(here)s/data/xplor/templates
+maxocc_data = %(here)s/data/maxocc_data
+maxocc_templ = %(here)s/data/maxocc/templates
+sednmr_data = %(here)s/data/sednmr_data
+png_image = %(here)s/webenmr/public/global/img_tmp/
+prog_dir =  %(here)s/data/prog
+template_dir = %(here)s/webenmr/public/templates
+properties = %(here)s/webenmr/public/properties
+statistics = %(here)s/data/statistics/
+
+# Logging configuration
+[loggers]
+#keys = root, routes, webenmr, sqlalchemy
+keys = root, routes, webenmr
+
+[handlers]
+keys = console
+
+[formatters]
+keys = generic
+
+[logger_root]
+level = INFO
+handlers = console
+
+[logger_routes]
+level = INFO
+handlers =
+qualname = routes.middleware
+# "level = DEBUG" logs the route matched and routing variables.
+
+[logger_webenmr]
+level = DEBUG
+handlers =
+qualname = webenmr
+
+[logger_sqlalchemy]
+level = INFO
+handlers =
+qualname = sqlalchemy.engine
+# "level = INFO" logs SQL queries.
+# "level = DEBUG" logs SQL queries and results.
+# "level = WARN" logs neither.  (Recommended for production systems.)
+
+[handler_console]
+class = StreamHandler
+args = (sys.stderr,)
+level = NOTSET
+formatter = generic
+
+[formatter_generic]
+format = %(asctime)s,%(msecs)03d %(levelname)-5.5s [%(name)s] [%(threadName)s] %(message)s
+datefmt = %H:%M:%S

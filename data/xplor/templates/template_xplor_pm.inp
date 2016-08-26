@@ -1,0 +1,362 @@
+!##seed
+!##init_t
+!evaluate ($init_t = 1000)
+!##high_step
+!evaluate ($high_steps = 12000)
+!##cool_step
+!evaluate ($cool_steps = 6000)
+!
+
+!BEGIN_COPY_ANALYSIS
+
+!##parameter
+!parameter
+! @TOPPAR:parallhdg.pro
+! @parallhdg.hemes
+! @par_axis_3.pro
+!end
+
+!##structure
+!structure 
+! @protein.psf 
+! @heme.psf
+! @axis_new_500.psf
+! @axis_new_600.psf
+!end
+
+!##topology
+!topology
+! @TOPPAR:topallhdg.pro
+! @topallhdg.hemes
+!end
+
+topology
+!@topallhdg5.3.pro
+@TOPPAR:protein.top
+
+      mass H 1.008
+
+     presidue HIEP ! change protonation of HIE -> HIP
+     add atom HD1 type=H charge= 0.40 end
+     add bond ND1 HD1
+     add angle HD1 ND1 CE1
+     add angle HD1 ND1 CG
+     add improper ND1 CE1 CG  HD1
+     end {HISE}
+
+     presidue HIED ! change protonation of HIE -> HID
+     add atom HD1 type=H charge= 0.40 end
+     delete atom HE2 end
+     add bond ND1 HD1
+     add angle HD1 ND1 CE1
+     add angle HD1 ND1 CG
+     add improper ND1 CE1 CG  HD1
+     end {HISE}
+
+end
+ 
+!##coordinates
+!coordinates @protein.pdb      
+!coordinates @heme.pdb
+!coordinates @axis_xyzo_3_500.pdb
+!coordinates @axis_xyzo_3_600.pdb
+
+!##patch
+!patch PHCB reference=1=(residue 11) reference=2=(residue 400) end
+!patch PHCC reference=1=(residue 14) reference=2=(residue 400) end
+
+!##noe_i
+!noe
+! nres=10000
+! class tensor
+!  @tensors.tbl
+! class others
+!  @noe.tbl 
+!  @metalcenter.tbl
+!end
+
+!##dih
+!restraints dihedral
+!@newtalos_mod.aco.tbl
+!end
+
+!##flags
+!flags exclude * include bonds angle impr vdw noe xpcs xrdc end
+
+vector do (fbeta=10) (all)
+vector do (mass=100) (all)
+
+noe     
+ ceiling=1000                     
+ averaging  * cent
+ potential  * soft
+ sqoffset   * 0.0  
+ sqconstant * 1.0
+ sqexponent * 2
+ soexponent * 1
+ asymptote  * 0.1  
+ rswitch    * 0.5
+end
+
+!##xpcs_i
+!xpcs
+! nres=2000
+! class iron
+! force 5.0
+! coeff 600.0 -150.0
+! @pcshifts.tbl
+!end
+
+!##xrdc_i
+!xrdc
+! nres=2000
+! class iron
+! force 5.0
+! coeff 0.720 -0.180
+! @rdcouplings.tbl
+!end
+
+
+parameter        
+ nbonds
+  repel=1.   
+  rexp=2 irexp=2 rcon=1.
+  nbxmod=3                
+  wmin=0.01 
+  cutnb=4.5 ctonnb=2.99 ctofnb=3. 
+  tolerance=0.5 
+ end
+end
+
+!END_COPY_ANALYSIS
+
+set abort off end
+
+!##num_stru_main
+!evaluate ($end_count=50)        
+
+coor copy end
+
+!##num_stru_loop
+!evaluate ($loop_count=10)
+
+!##timestep
+
+restraints dihedral
+      scale=5.
+end
+
+
+evaluate ($count1 = 0)
+while ($count1 < $loop_count ) loop media   
+evaluate ($count1=$count1+1)
+
+evaluate ($count = 0)
+while ($count < $end_count ) loop main 
+
+ evaluate ($count=$count+1)
+
+ coor swap end
+ coor copy end
+
+ noe
+  potential * soft
+ end
+
+ !{* ============================================ Initial minimization.*}
+ restraints dihedral   scale=5.   end
+ noe asymptote * 0.1  end
+ parameter nbonds repel=1. end end 
+ constraints interaction 
+  (not name SG) (all) weights * 1  vdw 0.002 end end
+ minimize powell nstep=500 drop=10.  nprint=25 end
+ !{* ======================================= High-temperature dynamics.*}
+ constraints interaction (not name SG) (all)  
+  weights * 1  angl 0.4  impr 0.1 vdw 0.002 end end
+
+ evaluate ($nstep1=int($high_steps * 2. / 3. ) ) 
+ evaluate ($nstep2=int($high_steps * 1. / 3. ) ) 
+
+ dynamics  verlet
+  nstep=$nstep1   timestep=$timestep   iasvel=maxwell   firstt=$init_t 
+  tcoupling=true  tbath=$init_t  nprint=50  iprfrq=0
+ end
+ !{* ============= Tilt the asymptote and increase weights on geometry.*}
+   noe asymptote * 1.0  end
+
+   constraints interaction 
+    (not name SG) (all) weights * 1  vdw 0.002  end end
+   dynamics  verlet
+    nstep=$nstep2   timestep=$timestep    iasvel=current   tcoupling=true 
+    tbath=$init_t  nprint=50  iprfrq=0 
+   end
+ !{* ================================================  Cool the system.*}
+   restraints dihedral   scale=200.   end
+   evaluate ($final_t = 100)     
+   evaluate ($tempstep = 50)   
+   
+   evaluate ($ncycle = ($init_t-$final_t)/$tempstep)
+   evaluate ($nstep = int($cool_steps/$ncycle))
+  
+   evaluate ($ini_rad  = 0.9)        evaluate ($fin_rad  = 0.75)
+   evaluate ($ini_con=  0.003)       evaluate ($fin_con=  4.0)
+
+   evaluate ($bath  = $init_t)
+   evaluate ($k_vdw = $ini_con)
+   evaluate ($k_vdwfact = ($fin_con/$ini_con)^(1/$ncycle))
+   evaluate ($radius=    $ini_rad)
+   evaluate ($radfact = ($fin_rad/$ini_rad)^(1/$ncycle))
+
+   evaluate ($i_cool = 0)
+   while ($i_cool < $ncycle) loop cool
+    evaluate ($i_cool=$i_cool+1)
+
+    evaluate ($bath  = $bath  - $tempstep)       
+    evaluate ($k_vdw=min($fin_con,$k_vdw*$k_vdwfact))
+    evaluate ($radius=max($fin_rad,$radius*$radfact))
+
+    parameter  nbonds repel=$radius   end end 
+    constraints interaction (not name SG) (all) 
+     weights * 1. vdw $k_vdw end end
+
+    dynamics  verlet
+     nstep=$nstep time=$timestep iasvel=current firstt=$bath 
+     tcoup=true tbath=$bath nprint=$nstep iprfrq=0  
+    end
+ !{===============================================>} {*Abort condition.*}
+    evaluate ($critical=$temp/$bath)
+    if ($critical >  100. ) then
+        display  ****&&&& rerun job with smaller timestep (i.e., 0.003) 
+        stop
+      !  eval ($jump=1)
+      !  coor swap end
+      !  coor copy end
+      !  vector do (vx = maxwell(250)) (all)
+      !  vector do (vy = maxwell(250)) (all)
+      !  vector do (vz = maxwell(250)) (all)
+      !  evaluate ($i_cool = $ncycle +1 )
+    end if
+
+   end loop cool
+ !{* ============================================== Final minimization.*}
+   constraints interaction (all) (all) weights * 1. vdw 4. end end
+
+   noe
+    potential * square
+   end
+   
+   minimize powell nstep=2000 drop=10.0 nprint=100 end
+
+!##xpcs_frun
+!   xpcs
+!    foff
+!    son
+
+!    evaluate ($filename="1pse"+encode($count1)+"_"+encode($count))
+!    save $filename
+!    frun 1
+
+!    soff
+!   end
+
+!##xrdc_frun
+!   xrdc
+!    foff
+!    son
+!
+!    evaluate ($filename="1dip"+encode($count1)+"_"+encode($count))
+!    save $filename
+!    frun 1
+!
+!    soff
+!   end
+
+ !{* ================================ Write out the final structure(s).*}
+   print threshold=0.5 noe 
+   evaluate ($rms_noe=$result)
+   evaluate ($violations_noe=$violations)
+   print threshold=5.0 cdih
+   evaluate ($rms_cdih=$result)
+   evaluate ($violations_cdih=$violations)
+   xpcs print threshold=0.15 all end
+   evaluate ($rms_xpcs=$result)
+   evaluate ($violations_xpcs=$violations)
+   xrdc print threshold=0.10 all end
+   evaluate ($rms_xrdc=$result)
+   evaluate ($violations_xrdc=$violations)
+   print thres=0.05 bonds          
+   evaluate ($rms_bonds=$result)
+   print thres=5. angles
+   evaluate ($rms_angles=$result)
+   print thres=5. impropers
+   evaluate ($rms_impropers=$result)
+   remarks ============================================================
+   remarks            overall,bonds,angles,improper,vdw,noe,cdih
+   remarks energie overall  : $ener
+   remarks energie bonds    : $bond
+   remarks energie angles   : $angl
+   remarks energie improper : $impr
+   remarks energie vdw      : $vdw
+   remarks energie noe      : $noe
+   remarks energie cdih     : $cdih
+   remarks energie xpcs     : $xpcs
+   remarks energie xrdc     : $xrdc
+   remarks ============================================================
+   remarks            bonds,angles,impropers,noe
+   remarks rms-d: $rms_bonds,$rms_angles,$rms_impropers,$rms_noe
+   remarks
+   remarks            xpcs,xrdc
+   remarks rms-d: $rms_xpcs,$rms_xrdc
+   remarks ============================================================
+   remarks             violations
+   remarks violations noe  : $violations_noe
+   remarks violations cdih : $violations_cdih
+   remarks violations xpcs : $violations_xpcs
+   remarks violations xrdc : $violations_xrdc
+   remarks ============================================================
+!{======================>} {*Name(s) of the family of final structures.*}
+
+!{======================>} {*Name(s) of the family of final structures.*}
+!   evaluate ($filename="sa_"+encode($count+$nrun-1)+".pdb")
+  evaluate ($filename="sa"+encode($count1)+"_"+encode($count)+".pdb")
+
+   write coordinates output =$filename end
+      
+ end loop main
+
+!##xpcs_fmed
+! xpcs
+!  fmed 20 1
+!  class iron
+!  coeff $chiax $chirh
+!
+!  fmed 1 0
+! end
+
+
+!##xrdc_fmed
+! xrdc
+!  fmed 20 1
+!  class iron
+!  coeff $dchiax $dchirh
+!
+!  fmed 1 0
+! end
+
+end loop media
+
+
+!xpcs
+! erron 10 35
+! frun 1
+!end
+
+
+!xrdc
+! erron 10 35
+! frun 1
+!end
+
+remarks END STRUCTURE CALCULATION
+
+stop

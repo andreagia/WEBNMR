@@ -1,0 +1,3 @@
+include webenmr/config/deployment.ini_tmpl
+recursive-include webenmr/public *
+recursive-include webenmr/templates *

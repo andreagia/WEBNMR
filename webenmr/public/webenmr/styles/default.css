@@ -1,0 +1,268 @@
+/* Layout Stylesheet */ 
+
+body {
+    margin: 0; 
+    padding:0;
+    color: #000000;
+    text-align: center;
+    /*height:100%;*/
+    /*min-width:1280px;*/
+    background-color:#e7e7e7 ;
+    /*url("bg-gradient.gif") repeat;*/
+    font:small/1.6em Verdana,Sans-serif;
+}
+
+#login_form{
+    text-align:left;
+}
+
+#wrapper{
+    width:750px;
+    margin:0 auto;
+    border:solid;
+    border-color:#868686;
+    border-width:1px;
+    text-align:left;
+    color:#333;
+    position:relative;
+    background-color:#fff ;
+
+}
+
+
+
+#header {
+    height: 120px;
+    width:749px;
+    text-align:center;
+     
+     /*color: #333333;*/
+     /*margin-left:20%;*/
+     /*margin-top:1%;*/
+}
+
+#header a {
+    text-decoration: none;
+    /*color: #1b96c2;*/
+    color:#333;
+    font-size: 13px;
+    margin-left:10px;
+
+}
+
+#header a:hover {
+    text-decoration: none;
+    
+    font-size: 13px;
+}
+
+#top-image{
+    height:151px;
+    background:#fff url('header-enmr.png') no-repeat;
+    text-align:left;
+}
+
+#footer {
+    height: 110px;
+    position:relative; 
+    /*  background: #c3d1b6;  */
+    /* background:#c7d1b0; */
+    color: #333333;
+    margin-top:3%;
+    margin-bottom:3%;
+    text-align:center;
+}
+
+#footer a {
+    font-size:11px;
+    color:#c7d1b0;
+}
+
+
+#table {
+    margin-top:8px;
+
+}
+
+#table td {
+    text-align:left;
+    margin-left:10%;
+    }
+#converter_table {
+    margin-top:8px;
+    text-align:left;
+}
+
+#outputTable {
+    margin-top:20px;
+    border:1px solid #000;
+    
+}
+#login {
+    height: 100px; 
+    /*width:640;*/
+    position:relative;
+    margin:20% 15% 1% 20%;
+    padding-top:10px;
+/*border:1px solid #1b96c2 ;*/
+/*background:url("menu-bg.gif") repeat ;*/
+
+}
+#stats{
+    color:#333;
+    
+    /*width:640;*/
+    /*border:1px solid #1b96c2 ;*/
+    /*margin:10% 15% 1% 20%;*/
+    /*background:url("menu-bg.gif") repeat ;*/
+    padding:5px;
+}
+#content {
+    /*  height: 480px;  */
+    padding:5px;
+    position:relative;
+     /*margin:1% 15% 1% 20%;*/
+    /*border:1px solid #1b96c2 ;*/
+    /*background:url("menu-bg.gif") repeat ;*/
+    color:#333;
+
+}
+#content h4 {
+    width:100%;
+    background-color: #001c47;
+    color:#fff;
+}
+
+#welcome { 
+    width:755px;
+    color: #333;
+}
+
+#welcome_link { 
+    color: #fff;
+}
+
+
+
+a {
+    color:#285A92;
+    text-decoration:none;
+}
+  
+a:hover {
+    color:#152C58;
+    text-decoration:underline;
+}
+
+
+p.link a span{
+    display: none;
+}
+p.link a:hover {
+    display: inline;
+}
+p.link a:visited span{
+    display: none;
+}
+p.link a:hover span {
+    position: absolute;
+    margin:-120px 0px 100px 10px;
+    font: bold 13px arial ;
+    color: #c3d1b6;
+    text-align:center;
+    display: block;
+}
+
+
+h4 {
+    margin:0; 
+    padding: 5px 0;
+}
+
+pre {
+    text-align:left;
+    margin:0;
+    padding:20px 0;
+}
+
+
+#sddm{
+    margin:  0 0 0 0;
+    padding: 0;
+    z-index: 30;
+    text-align:center;
+    margin-bottom:10px;
+    font-size:9px;
+    padding-left:10px;
+}
+
+#sddm li{
+    margin: 1px 0 0 0;
+    padding: 2px;
+    list-style: none;
+    float: left;
+    padding-left: 1px;
+    background-color: #001c47;
+    border:1px dotted #000;
+
+}
+
+#sddm li a
+{
+    display: block;
+    margin: 0 35px 0 0; 
+    /* 	padding: 4px 20px; */
+    width: 60px;
+    /* 	background:#283710	; */
+    /* 	color: #fff; */
+    text-align: center;
+    text-decoration: none;
+    padding-bottom:5px;
+    color: #fff;
+        /*margin-top:15px;*/
+	/*opacity:.70; 
+	 filter:alpha(opacity=70);
+	-moz-opacity:0.7;
+	border:1px dotted black;*/
+
+}
+
+/*#sddm li a:hover
+{	color: #e5ae1b}*/
+
+#sddm div{
+    position: absolute;
+    visibility: hidden;
+    /* 	margin-left: 20%; */
+    padding: 0;
+    /* 	background:#283710; */
+    /* 	border: 1px solid #5970B2; */
+    opacity:.80; 
+     /*filter:alpha(opacity=90);*/
+    filter: alpha(opacity=80); /*IE 6-7*/
+    filter: “alpha(opacity=80)”; /*IE 8*/
+    z-index:1; 
+    /*-moz-opacity:0.8;*/
+    border:1px dotted black;
+}
+
+#sddm div a{
+    position: relative;
+    display: block;
+    margin: 0;
+    padding: 5px ;
+    width: auto;
+    white-space: nowrap;
+    text-align: left;
+    text-decoration: none;
+    background-color: #001c47;
+    color: #fff;
+    /* 		background: #283710; */
+    /* 		color: #e5ae1b; */
+    /* 		font: 13px arial */
+}
+
+#sddm div a:hover{	
+    background-color:#e7e7e7;
+    color: #000; 
+} 

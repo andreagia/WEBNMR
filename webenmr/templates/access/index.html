@@ -1,0 +1,198 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+ <title>e-NMR web portal</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <meta name="description" content="Deploying and unifying the NMR e-Infrastructure in System Biology"/>
+  <meta name="author" content="Ferella, Giachetti, Morelli, CERM Interdepartment, Florence University"/>
+  <meta name="keywords" content="eNMR,NMR,Amber,grid"/>
+  <!--<link rel="stylesheet" type="text/css" media="print" href="../Main/print.css"/>-->
+
+  <link rel="stylesheet" type="text/css" media="screen, projection" href="mainstyle.css"/>
+  <!--<link rel="alternate" type="application/rss+xml" title="RSS" href="http://haddock.chem.uu.nl/Main/haddock.rss" />-->
+  <link rel="home" href="http://haddock.chem.uu.nl/enmr" title="Home" />
+  <link rel="Shortcut icon" href="../Images/favicon.ico" />
+
+
+  <!-- Page specific modification to the general CSS style -->
+  <style type="text/css">
+    .blue body { background-image:url("/global/images/body-background.gif"); }
+	.blue #path { background-image:url("/global/images/path-blue.png"); }
+	.blue #header { height:150px; background-image:url("/global/images/header-enmr.png"); }
+	.blue #navbar { background-image:url("/global/images/navbar-blue.png"); }
+	.blue #navbar a:hover { color:#EBF8C9; background-image:url("/global/images/navbarshadow-blue.png"); }
+	.blue #navbar .current a { color:#FFFFFF; background-image:url("/global/images/navbarshadow-blue.png"); }
+	.blue #subheader { background-image:url("/global/images/subheader-blue.png"); }
+	.blue #footer { background:#96ACC4; }
+	.blue .container { background-image:url("/global/images/container-blue.png"); }
+	.blue #path a:hover { color:#EBF8C9; }
+	.blue #path a, #path strong, #path li { color:#99CCD5; }
+	.blue #navbar a { color:#99CCD5; }
+	.blue #navbar { border-color:#001A3B; }
+	.blue #rssfeed { background:url(../Images/rssicon-blue.png) no-repeat 0 0; }
+	.blue .onsitelink, .onsitelink:visited { background:url("../Images/docicon-blue-off.png") no-repeat 0 0; }
+	.blue .offsitelink, .offsitelink:visited { background:url("../Images/linkicon-blue-off.png") no-repeat 0 0; }
+	.blue .emaillink, .emaillink:visited { background:url("../Images/emailicon-blue-off.png") no-repeat 0 0; }
+	.blue a.onsitelink:hover { background:url("../Images/docicon-blue-on.png") no-repeat 0 0; }
+	.blue a.offsitelink:hover { background:url("../Images/linkicon-blue-on.png") no-repeat 0 0; }
+	.blue a.emaillink:hover { background:url("../Images/emailicon-blue-on.png") no-repeat 0 0; }
+	.blue dt, dt a { color:#001A3B }
+	.blue #subheader span, #subheadersidebar { color:#001A3B }
+	.blue .topItem  { background-color:#001C47 }
+  </style>
+  <script type="text/javascript"> var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www."); document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+  </script>
+
+  <script type="text/javascript"> try { var pageTracker = _gat._getTracker("UA-11029847-3"); pageTracker._trackPageview(); } catch(err) {}</script>
+</head>
+ 
+<body class="blue">
+<div id="col2" class="container">
+   <div id="path">
+   	<ul>
+     <li><a href="index.php">home &gt;&gt;</a></li>
+     <li><a href="eNMR-portal.html">AMBER</a></li>
+
+    </ul> 
+   </div>
+   <div id="header">
+    <div style="padding-top:40px; padding-left:30px; color:white; font-size:350%; font-weight:bold; z-index:2">AMBER</div>
+    <div style="padding-top:20px; padding-left:50px; color:white; font-size:200%; z-index:2">e-NMR web portal</div>
+   </div>
+   <div id="navbar">
+    <ul>
+
+     <li><a href="index.php">Home</a></li>
+     <li><a href="haddock.php">HADDOCK</a></li>
+     <li><a href="xplor-nih.html">Xplor-NIH</a></li>
+     <li class="current"><a href="http://py-enmr.cerm.unfi.it/index.html">AMBER</a></li>
+     <li><a href="http://www.enmr.eu/webportal/cyana.html">CYANA</a></li>
+     <li><a href="csrosetta.php">CS-ROSETTA</a></li>
+     <li><a href="http://haddock.chem.uu.nl/enmr/services/TALOS/">TALOS+</a></li>
+
+     <li><a href="http://www.enmr.eu/webportal/mars.html">MARS</a></li>
+     <li><a href="http://nmr.cabm.rutgers.edu/autoassign/cgi-bin/aaenmr.py">AutoAssign</a><li>
+     <li><a href="http://www.enmr.eu/webportal/mdd.html">MDD</a></li>
+     <li><a href="format-converter.html">FormatConverter</a></li>
+     <li><a href="http://haddock.chem.uu.nl/enmr/services/3DDART/">3D-DART</a></li>
+     <li><a href="gridice.html">eNMR-Grid</a></li>
+
+     <li><a href="http://www.enmr.eu/WIKI">eNMR Wiki</a></li>
+    </ul>
+   </div>
+   <div id="subheader">
+    <ul>
+        <li><span>Welcome to the AMBER web portal &gt;&gt;</span></li>
+    </ul>
+    <p id="subheadersidebar">Login</p>
+
+   </div>
+   <div id="content">
+    <div id="maincol">
+        <dl class="intro">
+            <dt>Introduction to Amber grid service</dt>
+            <dd>
+                Amber (acronym to Assisted Model Building with Energy Refinement) is a suite of programs
+                <img width="256" height="128" src="pro.png" class="right"> that allow users
+                to perform molecular dynamics (MD) simulations on biological
+                systems. <br />This web portal makes available the entire functionality of AMBER, in particular (but not only)
+                using NMR-derived information as restraints for MD.
+            </dd>
+        </dl>
+        <!-- e-NMR aims at deploying and unifying the NMR computational infrastructure in system biology, 
+	   a project funded under the <a href="http://cordis.europa.eu/fp7/home_en.html" target="_blank">
+	   7th framework program</a> of the European Union (Contract no. 213010 - e-NMR).</dd>
+	  <dd>NMR plays an important role in life sciences (biomolecular NMR), and structural biology in particular, 
+	   at both European and international levels. Our main objective is to optimize and extend the use of the 
+	   NMR Research Infrastructures of <a href="http://www.eu-nmr.eu/" target="_blank">EU-NMR</a> through the 
+	   implementation of an e-Infrastructure in order to provide the biomolecular NMR user community with a 
+	   platform integrating and streamlining the computational approaches necessary for NMR data analysis and 
+	   structural modelling (e-NMR).-->
+    </div>
+   
+    <div id="subcol">
+     <!--<dl class="sidebar firstsidebaritem">
+      <dd class="sidetext"><a target="_blank" href="http://www.enmr.eu"><img src="../Images/e-NMR-logo.png" alt="e-NMR" width="206" /></a></dd>
+      <dd class="sidetext"><a target="_blank" href="http://cordis.europa.eu/fp7/ict/e-infrastructure/home_en.html"><img src="../Images/e-infrastructure-logo.png" alt="e-Infrastructure" width="206" /></a></dd>
+    </dl>-->
+    
+        <div class="sidebox">
+            <div class="boxhead"><h2>:: Access to AMBER ::</h2></div>
+                <div class="boxbody">
+                    <!--<p>Access verification:</p>-->
+                    <p>
+                        <form name="login" id="login" method="post" action="${h.url('/access/login')}" > 
+                            <label>Username:
+                                <input name="user_name" type="text" id="user" tabindex="1" class="text"  />  
+                            </label>
+                            <label>Password:  
+                                <input name="user_pwd" type="password" id="password" tabindex="2" class="text" />
+                                <input type="submit" tabindex="3" value="Submit" class="buttons" />
+                            </label> 
+                        </form>
+                        <p>If you have a certificate click <a href="https://py-enmr.cerm.unifi.it/create_user_ssl.html">here</a></p>
+                    </p>
+                    <br />
+                </div>
+                <!--[if lt IE 7]>
+                <div>&nbsp;</div>
+                <div id="item-list">
+                    <div class="item-box item-overdue">
+                        <h4>WARNING: You are running an unsupported browser</h4>
+                        <div class="item-content">
+                            <p><strong>Amber</strong> has been written for Mozilla Firefox,
+                            Opera, Apple Safari, and Microsoft Internet Explorer 7.0 and higher.
+                            Your version of Internet Explorer is not supported, and may not work.
+                            Please upgrade your browser to one of those listed above.</p>
+                        </div>
+                        <div class="item-links">&nbsp;</div>
+                    </div>
+                </div>
+            </div>
+            
+                <![endif]-->
+        </div>
+        <dl class="intro">
+            <dd>
+                Please, you must provide your username and password or access with your digital certificate.
+                If you don't have credentials but want try grid Amber functionality please enter username <em>guest</em>
+                and password <em>guest</em>.
+            </dd>
+        </dl>
+     
+    </div>
+
+   </div>
+
+   <div id="navbar">
+    <ul>
+        <li><a href="index.php">Home</a></li>
+        <li><a href="haddock.php">HADDOCK</a></li>
+        <li><a href="xplor-nih.html">Xplor-NIH</a></li>
+        <li class="current"><a href="amber.html">AMBER</a></li>
+        <li><a href="http://www.enmr.eu/webportal/cyana.html">CYANA</a></li>
+        <li><a href="csrosetta.php">CS-ROSETTA</a></li>
+        
+        <li><a href="http://haddock.chem.uu.nl/enmr/services/TALOS/">TALOS+</a></li>
+        <li><a href="http://nmr.cabm.rutgers.edu/autoassign/cgi-bin/aaenmr.py">AutoAssign</a><li>
+        <li><a href="http://www.enmr.eu/webportal/mars.html">MARS</a></li>
+        <li><a href="http://www.enmr.eu/webportal/mdd.html">MDD</a></li>
+        <li><a href="format-converter.html">FormatConverter</a></li>
+        <li><a href="http://haddock.chem.uu.nl/enmr/services/3DDART/">3D-DART</a></li>	
+        <li><a href="gridice.html">eNMR-Grid</a></li>
+        
+        <li><a href="http://www.enmr.eu/WIKI">eNMR Wiki</a></li>
+    </ul>
+   </div>
+   <div id="footer">
+    <p>2008 &copy; NMR Department Utrecht. All rights reserved<br />
+     <a href="http://validator.w3.org/check/referer" title="Validate this page as XHTML 1.0 Strict." rel="external">XHTML | </a>
+
+     <a href="http://jigsaw.w3.org/css-validator/check/referer?warning=no&amp;profile=css2" title="Validate the CSS used on this page." rel="external" >CSS</a></p>
+   </div>
+   <!-- RSS Notification -->
+   <!--<a href="../Main/haddock.rss" title="RSS feed"><span id="rssfeed"></span></a>-->
+</div>
+ </body>
+</html>

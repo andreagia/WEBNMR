@@ -1,0 +1,104 @@
+.effect {
+    position: relative;
+}
+.infoimg{
+    vertical-align: top;
+    margin: -8px -5px;
+    cursor: pointer;
+}
+.note {
+    color:#666666;
+    font-size:11px;
+}
+
+.no-available{
+    color: red;
+}
+
+.available{
+    color: blue;
+}
+.saved {
+    color:#6699CC;
+    font-size:11px;
+}
+
+.notsaved {
+    color:#993300;
+    font-size:11px;
+}
+.descrprot{
+    overflow: auto;
+}
+#example {
+    display: none;
+}
+#info {
+    display: none;
+}
+#saveform {
+    display: none;
+}
+#simplemodal-overlay {
+    background-color:#000;
+}
+#simplemodal-container {
+    background-color: #eee;
+    border:4px solid #6495ED;
+    padding:12px;
+    font: 11px 'Trebuchet MS', Verdana, Arial;
+    text-align:left;
+}
+#simplemodal-container a.modalCloseImg {
+    background:url('/global/images/x.png') no-repeat;
+    width:25px;
+    height:29px;
+    display:inline;
+    z-index:3200;
+    position:absolute;
+    top:-15px;
+    right:-18px;
+    cursor:pointer;
+}
+#sumsan{
+    display: none;
+}
+
+.sander_param {
+    overflow: auto;
+    height: 271px;
+}
+
+#header_sander{
+    clear: both;
+}
+
+#textarea_sander{
+    float: left;
+    width: auto;
+    min-width: 337px;
+}
+
+#multistep{
+    float: left;
+    width: 303px;
+    margin: -8px 15px 0px;
+}
+.multistep_header {
+    font-size: 10pt;
+}
+.nodisplay{
+    display:none;
+}
+    
+<!--[if lt IE 7]>
+    #simplemodal-container a.modalCloseImg {
+        background:none;
+        right:-14px;
+        width:22px;
+        height:26px;
+        filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(
+            src='/global/images/x.png', sizingMethod='scale'
+        );
+    }
+<![endif]-->

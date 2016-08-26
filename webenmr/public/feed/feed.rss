@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<rss version="2.0">
+<channel>
+
+<title>Amber GRID-enabled web portal</title>
+<description>GRID-enabled web portal to NMR structures refinement and molecular dynamic simulation of proteins based on Amber* Molecular Dynamics program suite</description>
+<link>http://py-enmr.cerm.unifi.it/</link>
+<lastBuildDate>Mon, 19 Jul 2010 10:30:00 GMT</lastBuildDate>
+<language>en-us</language>
+<managingEditor>web-enmr@cerm.unifi.it (Ferella, Giachetti, Morelli, Rosato)</managingEditor>
+
+<item>
+    <title>New GRID-enabled Amber (with paramagnetic) web portal Launch</title>
+    <link>http://py-enmr.cerm.unifi.it/</link>
+    <guid isPermaLink="false">110234577</guid>
+    <pubDate>Mon, 19 Jul 2010 10:30:00 GMT</pubDate>
+    <description>
+        <![CDATA[
+	Dear all,<br />
+                It is our pleasure to announce our new GRID-enabled Amber (with paramagnetic) we portal accessible
+	from the following addresses:<br/>
+	<br/>
+	 <a href="http://py-enmr.cerm.unifi.it/">http://py-enmr.cerm.unifi.it/</a><br/>
+	<br/>	
+	<b>AMBER</b> is a collective name for a suite of programs that allow users to carry out molecular dynamics (MD) simulations on biological systems.
+	The web-portal permits the creation and management of MD calculations from a web browser. The portal takes care also of all the grid accounting.
+	A new user with her/his personal certificate installed in the browser can access to the portal from e-NMR web page and straightforwardly create
+	a new user login and password. The site permits the creation of a new single calculation or the creation of a project where it will be possible
+	to save a number of different calculations that belong to a common project (e.g. MD refinements of protein structures generated with different ensembles of restraints). 
+	The user can select a pre-set MD refinement protocol to energy optimize NMR protein structures. The currently proposed protocol comprises four steps:
+	<ul>
+	    <li>
+	In the first step the protein structure to be optimized is uploaded: this step corresponds to the amber leap program. Here it is possible to upload
+	one pdb file, whose format will be automatically validated and converted into the format recognized by amber. If the interface detects some non
+	standard residues or does not recognize some atoms in the pdb file, the user will be respectively asked to insert the topology and parameters for
+	the non standard residue or presented with a warning showing the name of the atom(s) not recognized. During this step the user can add explicit water
+	molecules to solvate the protein, add counter ions, insert new bonds for selected atoms (e.g. protein to metal). For NMR structures, which are typically
+	represented by a bundle of 20-40 different conformers, this first step is carried out only for the first conformer and then automatically applied to all
+	the structures in the bundle (which, at present, must be uploaded as a compressed tar file of the NMR bundle). For each structure in the bundle, an individual
+	job is sent to the grid.
+	    </li>
+	    <li>
+	    The second step manages the NMR restraints. Four types of restraint are allowed: NOE, dihedral angles, residual dipolar couplings (rdc’s)
+	    and pseudocontact shifts (pcs). The last restraints are the so-called paramagnetic restraints. For all restraints it is possible to upload Xplor,
+	    Dyana, or Cyana files. For paramagnetic restraints, it is possible to fit the anisotropy tensor directly in the web site.
+	    </li>
+	    <li>
+	    The third step manages the setting of molecular dynamics calculations. The page can be visualized in a so-called basic mode and in an extended mode, which allows
+	    users to view all the details of the amber settings. This step corresponds to the setup of the input to the sander program of the amber suite. As mentioned,
+	    at this step it is possible to load a predefined sander protocol; nevertheless, this protocol can be modified by adding components from the menu in the left
+	    part of the screen or by editing any single components in the panel on the right side.
+	    </li>
+	    <li>
+	    The fourth and final step allows the user to give a name to the calculation started and submit it to the grid. When a grid job is started the web site
+	    allows the user to check its status and to download the completed jobs using the Jobs menu. After the results of a job have been downloaded,
+	    the user can browse them and download the various files.
+	    </li>
+	</ul>
+	<br/>
+	We hope that this web resource will be useful to the community and welcome any feedback (web-enmr@cerm.unifi.it).<br/>
+	<br />
+        <br />
+        *The GRID-enabled web portal runs version 10 of Amber Molecular Dynamics package.
+        ]]>
+    </description>
+</item>
+
+<item>
+    <title>Improved Multistructure management</title>
+    <link>http://py-enmr.cerm.unifi.it/</link>
+    <guid isPermaLink="false">110234577</guid>
+    <pubDate>Mon, 13 Dec 2010 18:00:00 GMT</pubDate>
+    <description>
+        <![CDATA[
+	Dear all,<br/>
+        it is our pleasure to announce that now is more easy manage a bundle of conformers. In fact the  GRID-enabled Amber (with paramagnetic) web portal
+	will automatically detects bundle of conformers and will ask you if use it in simulation or none.
+        ]]>
+    </description>
+</item>
+
+<item>
+    <title>Amber 11</title>
+    <link>http://py-enmr.cerm.unifi.it/</link>
+    <guid isPermaLink="false">110234577</guid>
+    <pubDate>Tue, 14 Dec 2010 09:00:00 GMT</pubDate>
+    <description>
+        <![CDATA[
+	Dear all,<br/>
+        it is our pleasure to announce that from now the <b>GRID-enabled Amber (with paramagnetic) web portal</b>
+	use the version 11 of the Amber software suite. <br />
+        ]]>
+    </description>
+</item>
+
+<item>
+    <title>Restart web GUI</title>
+    <link>http://py-enmr.cerm.unifi.it/</link>
+    <guid isPermaLink="false">110234577</guid>
+    <pubDate>Wed, 15 Dec 2010 11:00:00 GMT</pubDate>
+    <description>
+        <![CDATA[
+	Dear all,<br/>
+        it is our pleasure to announce that you can use the new web GUI to restart your jobs. Now you can run very long MD simulation with a few clicks.
+        ]]>
+    </description>
+</item>
+
+<item>
+    <title>Filemanager web GUI</title>
+    <link>http://py-enmr.cerm.unifi.it/</link>
+    <guid isPermaLink="false">110234577</guid>
+    <pubDate>Thu, 16 Dec 2010 12:30:00 GMT</pubDate>
+    <description>
+        <![CDATA[
+	Dear all,<br/>
+        it is our pleasure to announce that now you can create, rename, e delete projects with new filemanager GUI. You can also check easily
+	the status of your jobs, download or remove it and so way.
+        ]]>
+    </description>
+</item>
+
+</channel>
+</rss> 

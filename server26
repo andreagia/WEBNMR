@@ -1,0 +1,20 @@
+#!/bin/sh -e
+
+project="/home/webenmr/WebENMR/"
+cd $project
+
+case "$1" in
+start)
+/home/webenmr/pyvirt26/bin/paster serve --daemon --user apache --group apache --pid-file=paster.pid --log-file=server.log  development.ini start
+;;
+stop)
+/home/webenmr/pyvirt26/bin/paster serve --daemon --user apache --group apache --pid-file=paster.pid --log-file=server.log  development.ini stop
+;;
+restart)
+//home/webenmr/pyvirt26//bin/paster serve  --daemon --user apache --group apache --pid-file=paster.pid --log-file=server.log development.ini restart
+;;
+*)
+echo $"Usage: $0 {start|stop|restart}"
+exit 1
+esac
+

@@ -1,0 +1,186 @@
+
+form#login {
+/* stile di base per il form: bg grigio, txt nero,
+bordo grigio  chiaro
+*/
+ background-color: #CCCCCC;
+ color: #000000;
+ border: 1px solid #999999;
+ font-family: Verdana, Arial, Helvetica, sans-serif;
+ font-size: 10px;
+ text-align: left;
+}
+
+#login .text {
+/* classe per il testo immesso nei campi
+*/
+ font-family: Verdana, Arial, Helvetica, sans-serif;
+ font-size: 11px;
+ width: 100px;
+ margin-right: 6px;
+}
+
+#login .buttons {
+/* classe per il layout dei pulsanti
+*/
+ font-family: Verdana, Arial, Helvetica, sans-serif;
+ font-size: 10px;
+ background-color: #333333;
+ color: #FFFFFF;
+ margin-right: 6px;
+}
+#signup table {
+ background-color: #F9FBFD;
+ color: #000000;
+ width: 640px;
+ border: 1px solid #D7E5F2;
+ border-collapse: collapse;  /* toglie il doppio bordo */
+}
+
+#signup td {
+ border: 1px solid #D7E5F2;
+ padding-left: 4px;
+}
+
+.labelcell {
+ font: 11px Verdana, Geneva, Arial, Helvetica, sans-serif;
+ font-weight: bold;
+ text-align:left;
+ color: #3670A7;
+ background-color: transparent;
+ width: 320px;
+}
+
+.fieldcell {
+ background-color: #F2F7FB;
+ color: #000000;
+ text-align: right;
+ margin-right: 0px;
+ padding-right: 0px;
+}
+
+.readonly {
+ background-color: #F2F7FB;
+ color: #000000;
+ text-align: right;
+ margin-right: 0px;
+ padding-right: 0px;
+}
+
+/* classi speciali per celle più piccole
+*/
+
+.smalllabelcell {
+ font: 11px Verdana, Geneva, Arial, Helvetica, sans-serif;
+ font-weight: bold;
+ text-align:left;
+ background-color: transparent;
+ color: #3670A7;
+ width: 100px;
+}
+
+.verysmalllabelcell {
+ font: 7px Verdana, Geneva, Arial, Helvetica, sans-serif;
+ font-weight: bold;
+ text-align:left;
+ background-color: transparent;
+ color: #3670A7;
+ width: 100px;
+}
+
+.smallfieldcell {
+ background-color: #F2F7FB;
+ color: #000000;
+ text-align: right;
+}
+
+
+/* classi per le celle di input
+*/
+
+.readonly input {
+ width: 200px;
+ font: 11px Verdana, Geneva, Arial, Helvetica, sans-serif;
+ background-color: #D7E5F2;
+ color: #102132;
+ border: 1px dashed #284279;
+ margin-right: 0px;
+}
+
+.fieldcell input {
+ width: 200px;
+ font: 11px Verdana, Geneva, Arial, Helvetica, sans-serif;
+ background-color: #D7E5F2;
+ color: #102132;
+ border: 1px solid #284279;
+ margin-right: 0px;
+}
+
+.fieldcell textarea {
+ width: 200px;
+ font: 11px Verdana, Geneva, Arial, Helvetica, sans-serif;
+ background-color: #D7E5F2;
+ color: #102132;
+ border: 1px solid #284279;
+ margin-right: 0px;
+}
+
+.readonly textarea {
+ width: 200px;
+ font: 11px Verdana, Geneva, Arial, Helvetica, sans-serif;
+ background-color: #D7E5F2;
+ color: #102132;
+ border: 1px dashed #284279;
+ margin-right: 0px;
+}
+
+.fieldcell select {
+ width: 280px;
+ font: 11px Verdana, Geneva, Arial, Helvetica, sans-serif;
+ background-color: #D7E5F2;
+ color: #102132;
+ border: 1px solid #284279;
+}
+
+.smallfieldcell input {
+ width: 100px;
+ font: 11px Verdana, Geneva, Arial, Helvetica, sans-serif;
+ background-color: #D7E5F2;
+ color: #102132;
+ border: 1px solid #284279;
+}
+
+.smallfieldcell select {
+ font: 11px Verdana, Geneva, Arial, Helvetica, sans-serif;
+ background-color: #D7E5F2;
+ color: #102132;
+ border: 1px solid #284279;
+}
+
+/* classe per il solo pulsante 'submit'
+*/
+
+.button {
+ font: 11px Verdana, Geneva, Arial, Helvetica, sans-serif;
+ background-color: #D7E5F2;
+ color: #102132;
+ margin-left: 12px;
+ margin-top: 3px;
+ margin-bottom: 2px;
+}
+
+
+input.radio {
+    font:8px Verdana, Geneva, Arial,Helvetica,sans-serif;
+    color: #102132;
+    background-color: #D7E5F2;
+    border:none; 
+}
+
+input[type="radio"], input[type="checkbox"] {
+    font-family: Verdana,Geneva, Arial,Helvetica,sans-serif;
+    color: #102132;
+    background-color: #D7E5F2;
+    border:none;
+}
+

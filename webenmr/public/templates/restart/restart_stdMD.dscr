@@ -1,0 +1,10 @@
+This protocol can be used to restart a simulation carried out by presetted stdMD protocol, 
+and it simply continue to run the simulation for 500ps as the last step of stdMD protocol. 
+
+In the stdMD protocol, we equilibrated the solvated complex by carrying out a short minimisation,
+50ps of heating and 50 ps of density equilibration with weak restraints on the
+complex followed by 500ps of constant pressure equilibration at 300K.
+At this stage, you basically used the same protocol as in the final stage of equilibration
+and simply continued to run the simulation for 500ps. 
+All simulations ran with SHAKE on hydrogen atoms, a 2 fs time step
+and Langevin Dynamics for temperature control. 

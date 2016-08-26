@@ -1,0 +1,9 @@
+Executable = "run_a-map.sh";
+StdOutput  = "std.out";
+StdError   = "std.err";
+InputSandbox = {"CAMBIArun_a-map.sh","CAMBIAin.tgz"};
+OutputSandbox = {"std.out","std.err","restart","out.tgz"};
+Requirements = SEL_CE
+#Requirements = ( other.GlueCEUniqueID == "pbs-enmr.cerm.unifi.it:8443/cream-pbs-medium" );
+#Requirements = ( other.GlueCEUniqueID == "cream01.iihe.ac.be:8443/cream-pbs-enmr.eu" );
+#Requirements = ( other.GlueCEUniqueID == "kg-ce01.cc.kuleuven.be:2119/jobmanager-pbs-enmr.eu"|| other.GlueCEUniqueID == "as-ce01.euasiagrid.org:8443/cream-pbs-enmr" || other.GlueCEUniqueID == "ce01.begrid.be:8443/cream-pbs-enmr.eu" );
