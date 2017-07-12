@@ -31,4 +31,5 @@ def make_map(config):
     map.connect('/{controller}/', action='index', id=None)
     map.connect(None, '/{controller}/{action}')
     map.connect(None, '/{controller}/{action}/{id}')
+    map.connect('/get-token', controller='access', action='FGtoken', id=None)
     return map

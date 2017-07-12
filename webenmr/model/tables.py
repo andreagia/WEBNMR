@@ -26,6 +26,11 @@ users_table = Table('users', metadata,
     Column('hash', types.Unicode(40)),
     Column('removed', types.Boolean, default=False),
     Column('ssoxs_uid', types.Integer),
+    Column('access_token', types.Unicode(2048)),
+    Column('refresh_token', types.Unicode(2048)),
+    Column('iam_subject' , types.Unicode(50)),
+    Column('access_tok_creation', types.DateTime),
+    Column('refresh_tok_creation', types.DateTime),
     )
 
 myproxy_table = Table('myproxy', metadata,

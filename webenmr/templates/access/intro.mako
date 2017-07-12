@@ -150,6 +150,21 @@
                         </label> 
                     </form>
                     <br/>
+					<input id="btnGetResponseIAM" type="button" value="RedirectIAM" />
+					<script type="text/javascript">
+						$(function () {
+							$("#btnGetResponseIAM").click(function () {
+							$.get("${h.url('/access/loginIAM')}", function(data, status){
+							//alert("IAM TEST TEST TEST" + "\nStatus: " + status);
+							window.location = data;
+						});
+									
+							});
+						});
+					</script>
+					
+					</br>
+					
                     <p><a href="/users/forgotten" target="_blank">Forgot your password?</a><br/><a href="/access/newaccount" target="_blank">New to ${c.title.upper()}? Sign up.</a></p>
                 </div>
                 <!--[if lt IE 7]>

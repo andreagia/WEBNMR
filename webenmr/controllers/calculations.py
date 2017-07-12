@@ -398,7 +398,11 @@ class CalculationsController(BaseController):
         coordinates = etree.SubElement(input, "coordinates")
         newcalculation  = etree.SubElement(restart, "newcalculation")
         newcalculation.text = request.POST.get('name-restart')
-        
+
+        session["usegpu"] = True
+        session["useclo"] = False
+        session.save()
+
         owner = Session.query(Users).get(session['REMOTE_USER'])
         proj = request.POST.get('proj_list')
         project.text = proj
@@ -589,42 +593,83 @@ class CalculationsController(BaseController):
             shutil.copy(rdc_file, os.path.join(config['app_conf']['amber_data'],session.get('DIR_CACHE'),"allRDC.in"))
         if len(pcs_file) > 0:
             shutil.copy(pcs_file, os.path.join(config['app_conf']['amber_data'],session.get('DIR_CACHE'),"PCS.in"))
-            
-        
+
+        #     jdl = """
+        # Executable = "run_amber.sh";
+        # StdOutput = "std.out";
+        # StdError = "std.err";
+        # VirtualOrganisation="enmr.eu";
+        # InputSandbox = {"%s/in.tgz","%s/run_amber.sh"};
+        # OutputSandbox = {"std.out", "std.err","pro.tgz"};
+        # Requirements = %s
+        # """ % (pdir, pdir, app_globals.grid_req)
+        #
+        # abs_fullpath = os.path.join(pdir, "amber.jdl")
                 
-        jdl = """        
-Executable = "run_amber.sh";
-StdOutput = "std.out";
-StdError = "std.err";
-VirtualOrganisation="enmr.eu";
-InputSandbox = {"%s/in.tgz","%s/run_amber.sh"};
-OutputSandbox = {"std.out", "std.err","pro.tgz"};
-Requirements = %s 
-""" %(pdir, pdir, app_globals.grid_req)
+        jdl = """[
+executable = "run_amber.sh";
+stdOutput = "std.out";
+stdError = "std.err";
+outputsandboxbasedesturi = "gsiftp://localhost";
+inputsandbox = {"%s/in.tgz","%s/run_amber.sh"};
+outputsandbox = {"std.out", "std.err","pro.tgz"};
+]
+""" %(pdir, pdir)
 
         abs_fullpath = os.path.join(pdir, "amber.jdl")
         open(abs_fullpath,"w").write(jdl)
-        
+
         run_amber = """
 #!/bin/bash
-/bin/uname -a | /bin/grep 'x86_64' > /dev/null && ARCH='64' || ARCH='32'
+export CUDA_HOME=/usr/local/cuda-5.5
+export LD_LIBRARY_PATH=${CUDA_HOME}/lib64
+export AMBERHOME=/nfs_export/gpucluster/NMR_GPU/bin/amber14GPU_NOE/
+PATH=/usr/lib64/openmpi/bin:${CUDA_HOME}/bin:${PATH}
+export PATH
+#cd /nfs_export/gpucluster/GPU_Validation_Test
+#How many GPUs in node
 
-AMBERHOME=$VO_ENMR_EU_SW_DIR/CIRMMP/amber/11/$ARCH
+echo $AMBERHOME
+nvidia-smi
 
-DIRAE=$AMBERHOME/exe/
+DIRAE=$AMBERHOME/bin/
+
 
 tar xvfz in.tgz
 
 
 #AMBER_COMMAND
 
-
-#$DIRAE/sander -O -i sander.in -o sander.out -p prmtop -c prmcrd -r prm_out.crd
+#$DIRAE/pmemd.cuda -O -i sander.in -o sander.out -p prmtop -c prmcrd -r prm_out.crd
 #$DIRAE/ambpdb -p prmtop < prm_out.crd > amber_final.pdb
 
-tar cvfz pro.tgz ./*
+tar cvfz pro.tgz ./* --exclude in.tgz --exclude run_amber.sh --exclude gettensor.pl
 
 """
+
+
+
+
+#         run_amber = """
+# #!/bin/bash
+# /bin/uname -a | /bin/grep 'x86_64' > /dev/null && ARCH='64' || ARCH='32'
+#
+# AMBERHOME=$VO_ENMR_EU_SW_DIR/CIRMMP/amber/11/$ARCH
+#
+# DIRAE=$AMBERHOME/exe/
+#
+# tar xvfz in.tgz
+#
+#
+# #AMBER_COMMAND
+#
+#
+# #$DIRAE/sander -O -i sander.in -o sander.out -p prmtop -c prmcrd -r prm_out.crd
+# #$DIRAE/ambpdb -p prmtop < prm_out.crd > amber_final.pdb
+#
+# tar cvfz pro.tgz ./*
+#
+# """
         abs_fullpath = os.path.join(pdir, "run_amber.sh")
         run_amber_post = []
         for a in run_amber.split("\n"):
@@ -634,10 +679,10 @@ tar cvfz pro.tgz ./*
                 for i in list_input_sander:
                     ct = ct + 1
                     if ct == 1:
-                        run_amber_post.append("$DIRAE/sander -O -i %s -o %s -p prmtop -c prmcrd -r %s -ref prmcrd -x prod.crd \n" %(i, "sander" + str(ct-1) + ".out", i[:-4] + str(ct-1) + ".crd"  ))
+                        run_amber_post.append("$DIRAE/pmemd.cuda -O -i %s -o %s -p prmtop -c prmcrd -r %s -ref prmcrd -x prod.crd \n" %(i, "sander" + str(ct-1) + ".out", i[:-4] + str(ct-1) + ".crd"  ))
                         run_amber_post.append("$DIRAE/ambpdb -p prmtop < %s > %s \n" %(i[:-4] + str(ct-1) + ".crd", "amber_final" + str(ct-1) + ".pdb"))
                     else:
-                        run_amber_post.append("$DIRAE/sander -O -i %s -o %s -p prmtop -c %s -r %s -ref  %s \n" %(i, "sander" + str(ct-1) + ".out", i[:-4] + str(ct-2) + ".crd", i[:-4] + str(ct-1) + ".crd",i[:-4] + str(ct-2) + ".crd" ))
+                        run_amber_post.append("$DIRAE/pmemd.cuda -O -i %s -o %s -p prmtop -c %s -r %s -ref  %s \n" %(i, "sander" + str(ct-1) + ".out", i[:-4] + str(ct-2) + ".crd", i[:-4] + str(ct-1) + ".crd",i[:-4] + str(ct-2) + ".crd" ))
                         run_amber_post.append("$DIRAE/ambpdb -p prmtop < %s > %s \n" %(i[:-4] + str(ct-1) + ".crd", "amber_final" + str(ct-1) + ".pdb"))
                     
                     

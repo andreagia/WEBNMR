@@ -30,6 +30,8 @@ setup(
     entry_points="""
     [paste.app_factory]
     main = webenmr.config.middleware:make_app
+    [paste.paster_command]
+    purgeoldfiles = webenmr.purge_old_files:PurgeOldFilesCommand
 
     [paste.app_install]
     main = pylons.util:PylonsInstaller
