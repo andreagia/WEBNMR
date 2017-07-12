@@ -3,7 +3,7 @@ import os
 import hashlib
 import random
 import shutil
-from pylons import request, response, session, tmpl_context as c
+from pylons import request,response, session, tmpl_context as c
 from pylons.controllers.util import abort, redirect
 from pylons import config
 import pycurl
@@ -21,6 +21,10 @@ from dateutil import parser
 import pytz
 import MySQLdb
 from dateutil import parser
+import httplib, urllib, random, string, pprint, urllib2, pycurl,cStringIO
+import simplejson as json
+from webenmr.lib import postpy
+import base64
 
 
 def mult4string(data):
@@ -40,7 +44,10 @@ os.umask(0002)
 portal = ['amps-nmr', 'xplor-nih', 'anisofit', 'antechamber', 'maxocc', 'sednmr']
 class AccessController(BaseController):
     
-    
+    client_id = "###########"
+    client_secret = "###########3"
+    uspaswd = "###########"
+
     def __before__(self):
         """
         This __before__ method calls the parent method, and then sets up the
@@ -59,7 +66,7 @@ class AccessController(BaseController):
         #mail:
         print "acces using email for uid " + uid
         print "retrive DB info"
-        db = MySQLdb.connect(host="hostname",user="user",passwd="passwd", db="DB")
+        db = MySQLdb.connect(host="",user="",passwd="", db="")
         crs = db.cursor()
         crs.execute("""SELECT mail,name FROM ssoxs_users WHERE uid=%s"""%uid)
         res = crs.fetchone()
@@ -97,7 +104,7 @@ class AccessController(BaseController):
             new_user.logname =  logname
             new_user.dn = ""
             new_user.email = mail
-            new_user.password = "passwd"
+            new_user.password = "98vsfoiooioe"
             new_user.ssoxs_uid = int(uid)
             new_user.roles.append(role)
             Session.add(new_user)
@@ -178,7 +185,7 @@ class AccessController(BaseController):
             new_user.dn = DN
             new_user.email = mail
             new_user.ssoxs_uid = int(uid)
-            new_user.password = "passwd"
+            new_user.password = "98vsfoiooioe"
             new_user.roles.append(role)
             Session.add(new_user)
             Session.commit()
@@ -234,7 +241,9 @@ class AccessController(BaseController):
             
     def index_SSO(self, id_site ,string=None):
         #remeber to set as file
-        key = "KEY"
+        key = "###############"
+        #key = "mkllhgads8731ekglad7892qdq54345676567687665555476fdghe45"
+        #key = "mkllhgads8731ekglad7892qdqkglkjgq89321dhcwdjhw9832jkhdfw781t62lcdnmnaq7860fw60"
         #string = request.GET.get("SSO","")
         print len(string)
         print len(string) % 8
@@ -418,6 +427,430 @@ class AccessController(BaseController):
 
     #def index(self):
     #    return render('/access/intro.html')
+
+    def FGtoken(self):
+        pp = pprint.PrettyPrinter(indent=4)
+        pp.pprint(request.headers)
+        pp.pprint(request.POST)
+        print request.method
+
+        print "-------"
+        #uspaswd = "FGportal:e7hhryyturii"
+        # encoded base64.b64encode(b"FGportal:e7hhryyturii").ecode("ascii")
+        if (request.headers.get("Authorization")):
+
+            print "decode"
+            print request.headers.get("Authorization")
+            try:
+                print base64.decodestring(str(request.headers.get("Authorization").split()[1]))
+            except:
+                response.status_int = 400
+                respo = {"error": "wrong encode"}
+                return json.dumps(respo, indent=4, separators=(',', ': '))
+
+            if(str(base64.decodestring(str(request.headers.get("Authorization").split()[1]))) != self.uspaswd):
+                response.status_int = 400
+                respo = {"error": "wrong pass"}
+                return json.dumps(respo, indent=4, separators=(',', ': '))
+
+            print request.headers
+            print "POST"
+            print request.POST
+            print request.GET
+            if (len(request.POST) != 0 and (request.POST.get("token") or request.POST.get("subject"))):
+                if(request.POST.get("token")):
+                    token = str(request.POST.get("token"))
+                    url = "https://iam-test.indigo-datacloud.eu/userinfo"
+                    quarto = postpy.getpyuserinfo(url, token)
+                    if (quarto.get('sub')):
+                        subj = str(quarto.get('sub'))
+                        respo = {
+                            "error": None,
+                            "groups": [
+                                "Users",
+                                "Developers"
+                            ],
+                            "subject": subj
+                        }
+                        response.status_int = 200
+                    else:
+                        response.status_int = 400
+                        respo = {"error": "bad call"}
+
+
+                    print "token"
+                elif (request.POST.get("subject")):
+                    subject = str(request.POST.get("subject"))
+                    print subject
+
+                    #fare query db su iam_subject
+                    subquery = Session.query(Users).filter(Users.iam_subject == subject).first()
+                    if(subquery):
+
+                        refresh_token = subquery.refresh_token
+                        if(len(refresh_token)< 5):
+                            print refresh_token
+                            print "refresh tokn not present"
+
+                        postpar = {"client_id": self.client_id,
+                                   "grant_type": "refresh_token",
+                                   "redirect_uri": "https://py-enmr.cerm.unifi.it/access/FGtoken",
+                                   "client_secret": self.client_secret,
+                                   "refresh_token": refresh_token}
+                        url = "https://iam-test.indigo-datacloud.eu/token"
+                        #richiesta refresh token
+                        quarto = postpy.postpy(postpar,url)
+
+                        pprint.pprint(quarto)
+                        if (quarto.get('access_token')):
+                            token = quarto.get('access_token')
+                            respo = {
+                                "error": None,
+                                "groups": None,
+                                "subject": subject,
+                                "token": token
+                            }
+                            response.status_int = 200
+                        else:
+                            response.status_int = 400
+                            respo = {"error": "bad call"}
+                    else:
+                        response.status_int = 400
+                        respo = {"error": "bad subjetc"}
+
+
+                    print "subject"
+                else:
+                    print "pippo"
+
+                    response.status_int = 400
+                    respo = {"error": ""}
+            else:
+                print "pippo"
+
+                response.status_int = 400
+                respo = {"error": "no values"}
+
+        response.content_type = 'application/json'
+
+        return json.dumps(respo, indent=4, separators=(',', ': '))
+
+
+    def loginIAM(self):
+        # Funzioannte
+        # """Check logname and password to login the user"""
+        # stateIAM = ''.join(random.choice(string.ascii_lowercase+string.digits) for _ in range(16))
+        # session['STATE_IAM'] = stateIAM
+        # session.save()
+        # getpar={"client_id":"bfb79b5f-a4ad-4fd0-b182-72f8bfab6f39","response_type":"code+id_token",
+        #         "scope":"openid+email+offline_access","redirect_uri":"http://py-enmr.cerm.unifi.it/access/redIAM","state":stateIAM}
+        # conn = "https://iam-test.indigo-datacloud.eu/authorize?%s" % urllib.urlencode(getpar)
+        # return conn
+        """Check logname and password to login the user"""
+        stateIAM = ''.join(random.choice(string.ascii_lowercase+string.digits) for _ in range(16))
+        session['STATE_IAM'] = stateIAM
+        session.save()
+        #getpar={"client_id":"bfb79b5f-a4ad-4fd0-b182-72f8bfab6f39","response_type":"code",
+        #        "scope":"openid+email+offline_access","redirect_uri":"https://py-enmr.cerm.unifi.it/access/redIAM","state":stateIAM}
+        getpar={"client_id":self.client_id,"redirect_uri":"https://py-enmr.cerm.unifi.it/access/redIAM","state":stateIAM}
+        #conn = "https://iam-test.indigo-datacloud.eu/authorize?%s" % urllib.urlencode(getpar)
+        conn = "https://iam-test.indigo-datacloud.eu/authorize?response_type=code&scope=openid+profile+email+address+phone&%s"% urllib.urlencode(getpar)
+        #conn = "https://iam-test.indigo-datacloud.eu/authorize?response_type=code&client_id=bfb79b5f-a4ad-4fd0-b182-72f8bfab6f39&scope=openid+email&%s"% urllib.urlencode(getpar)
+        print conn
+        return conn 
+
+    def loginIAMaccess(self):
+        # Funzioannte
+        # """Check logname and password to login the user"""
+        # stateIAM = ''.join(random.choice(string.ascii_lowercase+string.digits) for _ in range(16))
+        # session['STATE_IAM'] = stateIAM
+        # session.save()
+        # getpar={"client_id":"bfb79b5f-a4ad-4fd0-b182-72f8bfab6f39","response_type":"code+id_token",
+        #         "scope":"openid+email+offline_access","redirect_uri":"http://py-enmr.cerm.unifi.it/access/redIAM","state":stateIAM}
+        # conn = "https://iam-test.indigo-datacloud.eu/authorize?%s" % urllib.urlencode(getpar)
+        # return conn
+        """Check logname and password to login the user"""
+        stateIAM = ''.join(random.choice(string.ascii_lowercase+string.digits) for _ in range(16))
+        session['STATE_IAM'] = stateIAM
+        session.save()
+        #getpar={"client_id":"bfb79b5f-a4ad-4fd0-b182-72f8bfab6f39","response_type":"code",
+        #        "scope":"openid+email+offline_access","redirect_uri":"https://py-enmr.cerm.unifi.it/access/redIAM","state":stateIAM}
+        getpar={"client_id":self.client_id,"redirect_uri":"https://py-enmr.cerm.unifi.it/access/redIAM","state":stateIAM}
+        #conn = "https://iam-test.indigo-datacloud.eu/authorize?%s" % urllib.urlencode(getpar)
+        conn = "https://iam-test.indigo-datacloud.eu/authorize?response_type=code&scope=openid+profile+email+address+phone+offline_access&%s"% urllib.urlencode(getpar)
+        #conn = "https://iam-test.indigo-datacloud.eu/authorize?response_type=code&client_id=bfb79b5f-a4ad-4fd0-b182-72f8bfab6f39&scope=openid+email&%s"% urllib.urlencode(getpar)
+        print conn
+        return conn
+
+
+    def redIAM(self):
+        refresh_token =''
+        access_token = ''
+        access_token_expire = ''
+        print "SONO in redIAM"
+        pp = pprint.PrettyPrinter(indent=4)
+        print "----- primi Rislutlati GET/POST -------"
+        pp.pprint(request.GET)
+        pp.pprint(request.POST)
+        if(len(request.POST) == 0 and request.GET.get("state")):
+            #esempio di pycurl
+            #http://stackoverflow.com/questions/6554386/getting-html-with-pycurl
+            print "faccio il POST"
+            if (str(request.GET.get("state")) != session['STATE_IAM']):
+                print"******* access.redIAM TENATIVO INTRUSIONE ******* " 
+                c.title = session['PORTAL'].upper()
+                return render('/access/intro.mako')
+            
+            pcode = request.GET.get("code")
+            
+            postpar = {"client_id":self.client_id,
+                       "grant_type":"authorization_code",
+                       "redirect_uri":"https://py-enmr.cerm.unifi.it/access/redIAM",
+                       "client_secret":self.client_secret,
+                       "code":str(pcode)}
+            url = "https://iam-test.indigo-datacloud.eu/token"
+            primo = postpy.postpy(postpar,url)
+            print "  PRIMO   "
+            pprint.pprint(primo)
+
+
+
+            # scope richiesto"scope":"address phone openid email profile offline_access"
+            if(primo.get('scope')):
+                csco= str(primo.get('scope'))
+
+                print "-----CSCO---------"
+                print csco
+                print "-----CSCO---------"
+
+                if ( ("address" in csco and "email" in csco and "phone" in csco and "openid" in csco and "profile" in csco) and "offline_access" not in csco):
+                    print "PRIMO CHECK"
+                    if (primo.get('access_token')):
+                        access_token = primo.get('access_token')
+                    else:
+                        print "ACCES TOKEN NON PRESENTE"
+                        c.title = session['PORTAL'].upper()
+                        return render('/access/intro.mako')
+
+                    url = "https://iam-test.indigo-datacloud.eu/userinfo"
+
+                    quarto = postpy.getpyuserinfo(url, access_token)
+
+                    pprint.pprint(quarto)
+                    if (quarto.get('sub')):
+                        subj = str(quarto.get('sub'))
+                        print "SUBJCT TROVATO"
+                    else:
+                        print "SUBJCT NON TROVATO"
+                        c.title = session['PORTAL'].upper()
+                        return render('/access/intro.mako')
+
+                    user = Session.query(Users).filter(Users.iam_subject == subj).first()
+                    if not user or len(user.refresh_token) < 5:
+                        c.title = session['PORTAL'].upper()
+                        return render('/access/introIAM.mako')
+
+                        # User already present in the database
+                        save_log("USER ALRADY PRESENT IN DB \n")
+                    else:
+
+                        session['REMOTE_USER'] = user.id
+                        # user.access_token = access_token
+                        # user.refresh_token = refresh_token
+                        # user.iam_subject = subj
+                        #session['ACCESS_TOKE'] = access_token
+                        #session['REFRESH_TOKE'] = user.refresh_token
+                        session['REMOTE_USER']
+                        Session.add(user)
+                        Session.commit()
+                        session.save()
+                        c.current_user = user
+                        if user.removed:
+                            return render('/users/user_removed_ssl.html')
+                        # Check for the user's myproxy presence
+                        # if user.myproxy:
+                        ## Instantiate the X509Certificate class
+                        # x509 = x509_certificate.X509Certificate()
+                        ## Load the myproxy certificate
+                        # ret = x509.load(user.myproxy.myproxy)
+                        # if ret['OK']:
+                        ## Check if it's expired
+                        # ret = x509.hasExpired()
+                        # if ret['OK']:
+                        # c.expired = True
+                        # else:
+                        ## Get the expiration date
+                        # ret = x509.getNotAfterDate()
+                        # if ret['OK']:
+                        # c.expiration_date = ret['Value']
+                        # else:
+                        # c.message = ret['Message']
+                        # else:
+                        ## User hasn't a myproxy certificate
+                        # no_proxy = True
+                        no_proxy = True
+
+                        # Home directory creation
+                    user = Session.query(Users).get(session['REMOTE_USER'])
+                    if user.home:
+                        home = user.home
+                    else:
+                        home = '%s%s' % (home_dir_prefix, user.id)
+                    session['HOME'] = os.path.join(config['app_conf']['working_dir'], home)
+                    session.save()
+                    if not os.path.isdir(session['HOME']):
+                        os.makedirs(session['HOME'])
+
+                    h.flash.set_message('You have successfully logged in.', 'success')
+                    h.redirect('/users/index')
+
+
+                if( not ("address" in csco and "email" in csco and "phone" in csco and "openid" in csco and "profile" in csco and "offline_access" in csco)):
+                    print"******* access.redIAM the user doesen't approve all scope in the iam portalitu ******* "
+                    h.flash.set_message('Please approve al access', 'error')
+                    c.title = session['PORTAL'].upper()
+                    return render('/access/intro.mako')
+            
+            if (primo.get('refresh_token')):
+                refresh_token = primo.get('refresh_token')
+            if (primo.get('access_token')):
+                access_token = primo.get('access_token')
+                access_token_expire = primo.get('expires_in')
+            if(primo.get('id_token')):
+                id_token=primo.get('id_token')  
+            print refresh_token,access_token
+            print "******************acces_token*******************"
+            print access_token
+
+
+            #https://cloud.digitalocean.com/v1/oauth/token?grant_type=refresh_token&client_id=CLIENT_ID&client_secret=CLIENT_SECRET&refresh_token=REFRESH_TOKEN
+
+            # postpar = {"client_id":self.client_id,
+            #            "grant_type":"refresh_token",
+            #            "redirect_uri":"https://py-enmr.cerm.unifi.it/access/redIAM",
+            #            "client_secret":self.client_secret,
+            #            "refresh_token":refresh_token}
+            #url = "https://iam-test.indigo-datacloud.eu/token"
+            #richiesta refresh token
+            #secondo = postpy.postpy(postpar,url)
+            url = "https://iam-test.indigo-datacloud.eu/userinfo"
+
+            quarto = postpy.getpyuserinfo(url,access_token)
+
+            pprint.pprint(quarto)
+
+            if (not quarto.get('email')):
+                print"******* access.redIAM email not present ******* "
+                c.title = session['PORTAL'].upper()
+                return render('/access/intro.mako')
+
+            print "-----EMAIL------"
+            print str(quarto.get('email'))
+
+            if(len(str(quarto.get('email')).split("@")) != 2 ):
+                print"******* access.redIAM email not correct ******* "
+                c.title = session['PORTAL'].upper()
+                return render('/access/intro.mako')
+
+            subj= str(quarto.get('sub'))
+
+            email = str(quarto.get('email'))
+            if(str(quarto.get('family_name'))):
+                f = str(quarto.get('family_name'))
+            else:
+                f = "IAM USER"
+
+            if (str(quarto.get('given_name'))):
+                l = str(quarto.get('given_name'))
+            else:
+                l = "IAM USER"
+
+            user = Session.query(Users).filter(Users.email == email).first()
+            # New user
+            print "*******ceck user*****"
+
+            pprint.pprint(user)
+
+            if not user:
+
+                role = Session.query(Role).filter(Role.name == 'Member').first()
+                save_log("NEW USER NAME " + f + "\n")
+                save_log("NEW USER LASTNAME " + l + "\n")
+                new_user = Users()
+                new_user.firstname = f
+                new_user.lastname = l
+                new_user.access_token = access_token
+                new_user.refresh_token = refresh_token
+                new_user.iam_subject = subj
+                new_user.roles.append(role)
+                Session.add(new_user)
+                Session.commit()
+                session['REMOTE_USER'] = new_user.id
+                session.save()
+                c.current_user = Session.query(Users).get(new_user.id)
+                no_proxy = True
+
+            else:
+                # User already present in the database
+                save_log("USER ALRADY PRESENT IN DB \n")
+
+                session['REMOTE_USER'] = user.id
+                user.access_token = access_token
+                user.refresh_token = refresh_token
+                user.iam_subject = subj
+                session['ACCESS_TOKE'] = access_token
+                session['REFRESH_TOKE'] = refresh_token
+                session['REMOTE_USER']
+                Session.add(user)
+                Session.commit()
+                session.save()
+                c.current_user = user
+                if user.removed:
+                    return render('/users/user_removed_ssl.html')
+                # Check for the user's myproxy presence
+                # if user.myproxy:
+                ## Instantiate the X509Certificate class
+                # x509 = x509_certificate.X509Certificate()
+                ## Load the myproxy certificate
+                # ret = x509.load(user.myproxy.myproxy)
+                # if ret['OK']:
+                ## Check if it's expired
+                # ret = x509.hasExpired()
+                # if ret['OK']:
+                # c.expired = True
+                # else:
+                ## Get the expiration date
+                # ret = x509.getNotAfterDate()
+                # if ret['OK']:
+                # c.expiration_date = ret['Value']
+                # else:
+                # c.message = ret['Message']
+                # else:
+                ## User hasn't a myproxy certificate
+                # no_proxy = True
+                no_proxy = True
+
+            # Home directory creation
+            user = Session.query(Users).get(session['REMOTE_USER'])
+            if user.home:
+                home = user.home
+            else:
+                home = '%s%s' % (home_dir_prefix, user.id)
+            session['HOME'] = os.path.join(config['app_conf']['working_dir'], home)
+            session.save()
+            if not os.path.isdir(session['HOME']):
+                os.makedirs(session['HOME'])
+
+            h.flash.set_message('You have successfully logged in.', 'success')
+            h.redirect('/users/index')
+
+        
+        
+        c.title = session['PORTAL'].upper()
+        return render('/access/intro.mako') 
+    
+        
+    
         
     def login(self):
         """Check logname and password to login the user"""
